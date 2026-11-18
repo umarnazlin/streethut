@@ -32,9 +32,13 @@ within about a minute. Customers never see any admin controls.
 ## 2. Vercel Blob store
 
 1. Vercel dashboard, open the Street Hut project, then the Storage tab.
-2. Create Database (or Create Store), choose Blob, name it `street-hut`, choose the nearest region, and if it asks
-   for access choose Public. Create.
-3. Connect it to the project for all environments. Vercel adds `BLOB_READ_WRITE_TOKEN` automatically.
+2. Create Database (or Create Store), choose Blob, name it `street-hut`, choose the nearest region, and make sure the
+   store's access is **Public** (the site saves a small public data file). Create.
+3. Connect it to the project for all environments.
+4. In the project, Settings, Environment Variables, you should now see `BLOB_STORE_ID` and `BLOB_WEBHOOK_PUBLIC_KEY`.
+   That is correct. Newer Blob stores sign in automatically (OIDC), so there is no `BLOB_READ_WRITE_TOKEN` to add.
+5. If the admin later says "Storage error", open the store in the Storage tab and check that its access is Public.
+   A Private store will not work with this site. Create a new Public store and connect it instead.
 
 ## 3. Environment variables
 
@@ -63,7 +67,7 @@ Environment variables only take effect on a new deploy.
 - "Admin sign-in is not set up yet": `GOOGLE_CLIENT_ID` is missing or the project was not redeployed after adding it.
 - Google says "Error 400: origin_mismatch" or the button does not appear: the site address is missing from Authorized JavaScript origins.
 - "This Google account is not on the admin list": check the email in `ADMIN_EMAILS` and redeploy.
-- "Could not save: Storage error": the Blob store is not connected to this project.
+- "Could not save: Storage error ...": the Blob store is not connected, or it is a Private store. See step 2.
 - Sign-in lasts about an hour. After that, Save asks you to sign in again.
 
 ## Menu prices

@@ -28,7 +28,8 @@ export default async function handler(req, res) {
       cacheControlMaxAge: 60,
     });
   } catch (e) {
-    return send(res, 500, { error: 'Storage error' });
+    const why = String((e && e.message) || e).slice(0, 160);
+    return send(res, 500, { error: 'Storage error: ' + why });
   }
   return send(res, 200, { ok: true }, { 'Cache-Control': 'no-store' });
 }
