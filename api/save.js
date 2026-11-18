@@ -1,5 +1,5 @@
-import { put } from '@vercel/blob';
 import { send, adminFrom, sanitize } from './_lib.js';
+import { writeShopData } from './_blob.js';
 
 // Admin only: saves prices, sold-out items, hours and the notice banner to Vercel Blob.
 export default async function handler(req, res) {
@@ -20,13 +20,7 @@ export default async function handler(req, res) {
   if (!clean) return send(res, 400, { error: 'Invalid data' });
 
   try {
-    await put('shop-data.json', JSON.stringify(clean), {
-      access: 'public',
-      contentType: 'application/json',
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      cacheControlMaxAge: 60,
-    });
+    await writeShopData(JSON.stringify(clean));
   } catch (e) {
     const why = String((e && e.message) || e).slice(0, 160);
     return send(res, 500, { error: 'Storage error: ' + why });
