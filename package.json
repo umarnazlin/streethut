@@ -1,0 +1,9 @@
+{
+  "name": "street-hut-site",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@vercel/blob": "^1.0.0"
+  }
+}

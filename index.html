@@ -1,6 +1,12 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Street Hut, Mawanella. Street food cooked over fire, masala chai and badam. Order ahead on WhatsApp.">
+<link rel="icon" href="img/logo.jpg">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Street Hut Mawanella</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&family=Noto+Sans+Sinhala:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
 <style>
 /* Layout: split hero (copy | photo), category tiles, favourites grid, WhatsApp band, review grid.
@@ -241,6 +247,8 @@ textarea.input{resize:vertical;min-height:64px}
 .asheet summary{cursor:pointer;font-weight:600}
 </style>
 
+</head>
+<body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 10a8 6 0 0116 0z"/><path d="M3 13h18"/><path d="M4 16.2h16"/><path d="M5 19h14a1 1 0 001-1v-1.8H4V18a1 1 0 001 1z"/></symbol>
   <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18a9 7 0 01-18 0z"/><path d="M8 8L7 4M12 8V3M16 8l1-4"/></symbol>
@@ -395,6 +403,11 @@ textarea.input{resize:vertical;min-height:64px}
     </div>
   </div>
 </section>
+<!-- ADMIN (not linked from the menu; reached at /#admin) -->
+<section class="view" id="v-admin" hidden>
+  <div class="wrap page-head"><h1 class="display">Admin</h1><p>Sign in with an approved Google account to edit prices, sold-out items, opening hours and the notice banner.</p></div>
+  <div class="wrap" style="padding-bottom:56px"><div id="gsiBtn"></div><p class="amsg" id="adminStatus" role="status" style="margin-top:16px"></p></div>
+</section>
 </main>
 
 <footer class="footer"><div class="footer-in">
@@ -405,7 +418,7 @@ textarea.input{resize:vertical;min-height:64px}
 <button type="button" class="btn btn-line btn-sm adminpill" id="adminPill" hidden>Admin</button>
 <section class="asheet" id="asheet" hidden aria-label="Admin">
   <div class="asheet-in">
-    <div class="arow"><strong>Admin edit mode</strong><a class="btn btn-line btn-sm" href="#menu">Edit menu prices</a><button type="button" class="btn btn-sun btn-sm" id="aSave">Save changes</button><button type="button" class="btn btn-line btn-sm" id="aExit">Exit</button></div>
+    <div class="arow"><strong>Admin edit mode</strong><a class="btn btn-line btn-sm" href="#menu">Edit menu prices</a><button type="button" class="btn btn-sun btn-sm" id="aSave">Save changes</button><button type="button" class="btn btn-line btn-sm" id="aExit">Exit</button><button type="button" class="btn btn-line btn-sm" id="aOut">Sign out</button></div>
     <p class="amsg" id="aMsg" role="status">Open the Menu page to set prices and mark items sold out. Customers see nothing until you save.</p>
     <details><summary>Opening hours and notice banner</summary>
       <div class="agrid" style="margin-top:12px">
@@ -447,41 +460,115 @@ let isAdmin = false, editMode = false, dirty = false;
 
 /* ---------- Menu ---------- */
 const CATS = [
-  {id:'bites',  icon:'burger', n:{en:'Street Bites',    si:'වීදි කෑම',            ta:'தெருவோர உணவு'}},
-  {id:'noodles',icon:'bowl',   n:{en:'Noodles & Pasta', si:'නූඩ්ල්ස් සහ පාස්තා', ta:'நூடுல்ஸ் & பாஸ்தா'}},
-  {id:'chai',   icon:'cup',    n:{en:'Chai',            si:'චායි',               ta:'சாய்'}},
-  {id:'coffee', icon:'cup',    n:{en:'Coffee',          si:'කෝපි',               ta:'காபி'}},
-  {id:'hot',    icon:'cup',    n:{en:'Hot Drinks',      si:'උණු බීම',            ta:'சூடான பானங்கள்'}},
-  {id:'cold',   icon:'glass',  n:{en:'Cold Drinks',     si:'සීතල බීම',           ta:'குளிர் பானங்கள்'}},
-  {id:'juice',  icon:'glass',  n:{en:'Fresh Juice',     si:'පලතුරු යුෂ',         ta:'பழச்சாறு'}},
-  {id:'mojito', icon:'glass',  n:{en:'Mojito',          si:'මොහිටෝ',             ta:'மொஹிட்டோ'}},
-  {id:'shakes', icon:'glass',  n:{en:'Milkshakes',      si:'මිල්ක්ෂේක්',         ta:'மில்க்ஷேக்'}}
+  {id:"bites", icon:"burger", n:{en:"Street Bites", si:"වීදි කෑම", ta:"தெருவோர உணவு"}},
+  {id:"rice", icon:"bowl", n:{en:"Rice", si:"රයිස්", ta:"ரைஸ்"}},
+  {id:"kotthu", icon:"bowl", n:{en:"Kotthu & Dolphin", si:"කොත්තු සහ ඩොල්ෆින්", ta:"கொத்து & டால்பின்"}},
+  {id:"noodles", icon:"bowl", n:{en:"Noodles & Pasta", si:"නූඩ්ල්ස් සහ පාස්තා", ta:"நூடுல்ஸ் & பாஸ்தா"}},
+  {id:"chai", icon:"cup", n:{en:"Chai", si:"චායි", ta:"சாய்"}},
+  {id:"coffee", icon:"cup", n:{en:"Coffee", si:"කෝපි", ta:"காபி"}},
+  {id:"hot", icon:"cup", n:{en:"Hot Drinks", si:"උණු බීම", ta:"சூடான பானங்கள்"}},
+  {id:"cold", icon:"glass", n:{en:"Cold Drinks", si:"සීතල බීම", ta:"குளிர் பானங்கள்"}},
+  {id:"juice", icon:"glass", n:{en:"Fresh Juice", si:"පලතුරු යුෂ", ta:"பழச்சாறு"}},
+  {id:"shakes", icon:"glass", n:{en:"Milkshakes", si:"මිල්ක්ෂේක්", ta:"மில்க்ஷேக்"}},
+  {id:"mojito", icon:"glass", n:{en:"Mojito", si:"මොහිටෝ", ta:"மொஹிட்டோ"}},
+  {id:"floats", icon:"glass", n:{en:"Floats, Boba & Lassi", si:"ෆ්ලෝට්, බෝබා සහ ලැසි", ta:"ஃப்ளோட், போபா & லஸ்ஸி"}}
 ];
 const slug = s => s.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const ITEMS = [];
 function add(cat, name, variants, desc){ ITEMS.push({id:slug(name), cat, name, variants:variants||[''], desc:desc||''}); }
-add('bites','Crispy Chicken Cheese Burger');
-add('bites','Masala Crispy Chicken Burger',['Medium']);
-add('bites','Chunky Chicken Sandwich');
-add('bites','Chunky Chicken Submarine',['Large','Medium']);
-add('bites','Crispy Chicken Submarine',['Large']);
-add('bites','Chicken Shawarma');
-add('bites','Hot Dog Cheese');
-add('bites','Crispy Chicken Drumlet',['Each']);
-add('noodles','Fried Noodles',['Normal','Large']);
-add('noodles','Fried Noodles With BBQ Chicken',['Regular']);
-add('noodles','Chicken Pasta',['Regular','With cheese']);
-['Masala Chai','Cardamom Chai','Cinnamon Chai','Sukku Chai'].forEach(n=>add('chai',n));
-add('chai','Tea',['Regular']);
-['Black Coffee','Bru Coffee','Milk Coffee','Masala Coffee','Nescafe','Sunrise Coffee'].forEach(n=>add('coffee',n));
-['Hot Badam','Hot Date Milk','Hot Milo','Hot Chocolate','Hot Chocolate - Cadbury','Hot Choco Badam'].forEach(n=>add('hot',n));
-['Iced Badam','Iced Milo','Faluda','Iced Coffee'].forEach(n=>add('cold',n));
-add('cold','Sanja Badam',null,'Jelly and grated almond in every sip. Natural jelly and almond seeds.');
-['Lime Juice','Mango Juice','Banana Juice','Lime & Mint Juice','Watermelon Juice','Pineapple Juice','Mix Fruit + Ice','Avocado Juice'].forEach(n=>add('juice',n));
-['Strawberry Mojito','Berry Mojito'].forEach(n=>add('mojito',n));
-['Banana','Strawberry','Mango','Blackberry','Chocolate','Blueberry','Vanilla','Avocado','Butterscotch'].forEach(n=>add('shakes',n+' Milkshake'));
+add("bites","Crispy Chicken Cheese Burger",null);
+add("bites","Masala Crispy Chicken Burger",["Medium"]);
+add("bites","Chunky Chicken Sandwich",null);
+add("bites","Chunky Chicken Submarine",["Large", "Medium"]);
+add("bites","Crispy Chicken Submarine",["Large"]);
+add("bites","Chicken Shawarma",null);
+add("bites","Hot Dog Cheese",null);
+add("bites","Crispy Chicken Drumlet",["Each"]);
+add("rice","Chicken Fried Rice",["Regular", "Large"]);
+add("rice","Beef Fried Rice",["Regular", "Large"]);
+add("rice","Seafood Fried Rice",["Regular", "Large"]);
+add("rice","Mix Fried Rice",["Regular", "Large"]);
+add("rice","BBQ Fried Rice",null);
+add("rice","Crispy Chicken Fried Rice",null);
+add("rice","Chicken Nasi Goreng",null);
+add("rice","Beef Nasi Goreng",null);
+add("rice","Seafood Nasi Goreng",null);
+add("rice","Mix Nasi Goreng",null);
+add("rice","Chicken Mongolian Rice",null);
+add("rice","Beef Mongolian Rice",null);
+add("rice","Seafood Mongolian Rice",null);
+add("rice","Mix Mongolian Rice",null);
+add("rice","Chicken Garlic Rice",null);
+add("rice","Beef Garlic Rice",null);
+add("kotthu","Chicken Kotthu",["Regular", "Large"]);
+add("kotthu","Beef Kotthu",["Regular", "Large"]);
+add("kotthu","Seafood Kotthu",["Regular", "Large"]);
+add("kotthu","Mixed Kotthu",["Regular", "Large"]);
+add("kotthu","Chicken Cheese Kotthu",["Regular", "Large"]);
+add("kotthu","Beef Cheese Kotthu",["Regular", "Large"]);
+add("kotthu","Creamy Kotthu",["Regular", "Large"]);
+add("kotthu","String Hoppers Kotthu",["Regular", "Large"]);
+add("kotthu","Chicken Dolphin",["Large"]);
+add("kotthu","Beef Dolphin",["Large"]);
+add("noodles","Chicken Noodles",["Regular", "Large"]);
+add("noodles","Beef Noodles",["Regular", "Large"]);
+add("noodles","Milky Pasta",null);
+add("noodles","Pasta",null);
+add("chai","Masala Chai",null);
+add("chai","Cardamom Chai",null);
+add("chai","Cinnamon Chai",null);
+add("chai","Tea",["Regular"]);
+add("chai","Sukku Chai",null);
+add("coffee","Black Coffee",null);
+add("coffee","Bru Coffee",null);
+add("coffee","Milk Coffee",null);
+add("coffee","Masala Coffee",null);
+add("coffee","Nescafe",null);
+add("hot","Hot Badam",null);
+add("hot","Hot Date Milk",null);
+add("hot","Hot Milo",null);
+add("hot","Hot Chocolate",null);
+add("hot","Hot Choco Badam",null);
+add("hot","Hot Strawberry",null);
+add("hot","Real Lime",null);
+add("cold","Iced Badam",null);
+add("cold","Iced Milo",null);
+add("cold","Faluda",null);
+add("cold","Iced Coffee",null);
+add("cold","Sanja Badam",null,"Jelly and grated almond in every sip. Natural jelly and almond seeds.");
+add("juice","Lime Juice",null);
+add("juice","Mango Juice",null);
+add("juice","Papaya Juice",null);
+add("juice","Lime & Mint Juice",null);
+add("juice","Watermelon Juice",null);
+add("shakes","Banana Milkshake",null);
+add("shakes","Mango Milkshake",null);
+add("shakes","Chocolate Milkshake",null);
+add("shakes","Vanilla Milkshake",null);
+add("shakes","Avocado Milkshake",null);
+add("shakes","Butterscotch Milkshake",null);
+add("shakes","Durian Milkshake",null);
+add("shakes","Strawberry Milkshake",null);
+add("mojito","Lime & Mint Mojito",null);
+add("mojito","Strawberry Mojito",null);
+add("mojito","Apple Mojito",null);
+add("mojito","Blackcurrant Mojito",null);
+add("mojito","Passion Mojito",null);
+add("mojito","Bubblegum Mojito",null);
+add("mojito","Blue Lime Mojito",null);
+add("mojito","Green Apple Mojito",null);
+add("mojito","Guava Mojito",null);
+add("mojito","Lychee Mojito",null);
+add("floats","Passion Float",null);
+add("floats","Blue Ocean Float",null);
+add("floats","Strawberry Float",null);
+add("floats","Milo Boba",null);
+add("floats","Choco Boba",null);
+add("floats","Strawberry Boba",null);
+add("floats","Regular Lassi",null);
+add("floats","Mango Lassi",null);
 const BY = Object.fromEntries(ITEMS.map(i=>[i.id,i]));
-const FAVS = ['chicken-shawarma','masala-chai','sanja-badam','hot-dog-cheese','berry-mojito','chunky-chicken-submarine'];
+const FAVS = ['chicken-shawarma', 'masala-chai', 'sanja-badam', 'hot-dog-cheese', 'blackcurrant-mojito', 'chunky-chicken-submarine'];
 
 const REVIEWS = [
   {who:'Shakir Explores', t:'Great spot in town for dinner with friends or family. Warm vibe with nice ambient lighting. Good range of drinks—blackcurrant mojito and masala chai are must-tries.'},
@@ -704,7 +791,7 @@ function applyLang(){
   renderTiles(); renderFavs(); renderReviews(); renderMenu(); renderCart(); showNotice(); showHours(); syncFields(); measure();
 }
 function measure(){ document.documentElement.style.setProperty('--hdr', $('#hdr').offsetHeight + 'px'); }
-const ROUTES = ['home','menu','story','visit'];
+const ROUTES = ['home','menu','story','visit','admin'];
 function route(){
   let r = location.hash.slice(1); if(!ROUTES.includes(r)) r = 'home';
   ROUTES.forEach(x=>{ $('#v-'+x).hidden = x!==r; });
@@ -777,51 +864,97 @@ window.addEventListener('resize', measure);
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
 })();
 
-/* ---------- Shop data and admin ---------- */
+/* ---------- Shop data and admin (Google sign-in, saved to Vercel Blob) ---------- */
+let idToken = null, gsiReady = false;
 function markDirty(){ dirty = true; $('#aMsg').textContent = 'Unsaved changes. Customers see nothing until you press Save changes.'; }
 function showNotice(){ const n = $('#notice'); const txt = (DATA.notice[lang] || DATA.notice.en || '').trim(); n.textContent = txt; n.hidden = !txt; measure(); }
 function showHours(){ const h = (DATA.hours[lang] || DATA.hours.en || '').trim(); const el = document.querySelector('[data-i18n="hours_v"]'); if(el) el.textContent = h || t('hours_v'); }
 function syncFields(){ $$('[data-f]').forEach(i=>{ const [g,l] = i.dataset.f.split('.'); i.value = DATA[g][l] || ''; }); }
+function normalize(d){ return {prices:d.prices||{}, soldOut:d.soldOut||[], hours:Object.assign({en:'',si:'',ta:''}, d.hours), notice:Object.assign({en:'',si:'',ta:''}, d.notice)}; }
 function applyData(){ cart = cart.filter(c=>!isSold(c.id)); saveCart(); renderFavs(); renderMenu(); renderCart(); showNotice(); showHours(); syncFields(); }
 async function loadData(){
-  try{
-    const r = await fetch('shop-data.json', {cache:'no-store'}); if(!r.ok) return;
-    const d = await r.json();
-    DATA = {prices:d.prices||{}, soldOut:d.soldOut||[], hours:Object.assign({en:'',si:'',ta:''}, d.hours), notice:Object.assign({en:'',si:'',ta:''}, d.notice)};
-    applyData();
-  }catch(e){}
+  /* The saved copy comes from the API. shop-data.json in the project is the starting copy until the first save. */
+  for(const url of ['/api/shop-data','shop-data.json']){
+    try{
+      const r = await fetch(url, {cache:'no-store'}); if(!r.ok) continue;
+      DATA = normalize(await r.json()); applyData(); return;
+    }catch(e){}
+  }
 }
 function setEdit(on){
   editMode = on && isAdmin; $('#asheet').hidden = !editMode; $('#adminPill').hidden = !isAdmin || editMode;
   syncFields(); renderMenu(); renderFavs();
 }
+async function checkAdmin(tok){
+  try{
+    const r = await fetch('/api/me', {headers:{Authorization:'Bearer ' + tok}, cache:'no-store'});
+    if(!r.ok) return null;
+    const j = await r.json(); return j.admin ? j : null;
+  }catch(e){ return null; }
+}
+async function onCredential(resp){
+  const st = $('#adminStatus'); st.textContent = 'Checking your account...';
+  const j = await checkAdmin(resp.credential);
+  if(!j){ st.textContent = 'This Google account is not on the admin list.'; return; }
+  idToken = resp.credential; isAdmin = true;
+  try{ sessionStorage.setItem('sh-admin-token', idToken); }catch(e){}
+  st.textContent = 'Signed in as ' + j.email + '.';
+  location.hash = 'menu'; setEdit(true);
+}
+function loadGsi(){
+  return new Promise(res=>{
+    if(window.google && google.accounts) return res();
+    const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+    s.onload = ()=>res(); s.onerror = ()=>res(); document.head.appendChild(s);
+  });
+}
+async function initAdminView(){
+  if(location.hash.slice(1) !== 'admin') return;
+  const st = $('#adminStatus');
+  if(isAdmin){ st.textContent = 'You are signed in. Open the Menu page to edit.'; return; }
+  let cfg = null;
+  try{ cfg = await (await fetch('/api/config', {cache:'no-store'})).json(); }catch(e){}
+  if(!cfg || !cfg.clientId){ st.textContent = 'Admin sign-in is not set up yet. Add GOOGLE_CLIENT_ID in Vercel and redeploy.'; return; }
+  await loadGsi();
+  if(!(window.google && google.accounts)){ st.textContent = 'Could not load Google sign-in. Check your connection and refresh.'; return; }
+  if(!gsiReady){
+    google.accounts.id.initialize({client_id: cfg.clientId, callback: onCredential});
+    google.accounts.id.renderButton($('#gsiBtn'), {theme:'outline', size:'large', text:'signin_with', shape:'pill'});
+    gsiReady = true;
+  }
+  st.textContent = '';
+}
 async function saveData(){
   const btn = $('#aSave'), msg = $('#aMsg'); btn.disabled = true; msg.textContent = 'Saving...';
   try{
-    const a = (window.claude && claude.use) ? await claude.use('artifact') : null;
-    if(!a){ msg.textContent = 'Saving is not available in this view.'; return; }
-    await a.publish({'shop-data.json': {content: JSON.stringify(DATA, null, 1), contentType:'application/json'}});
-    dirty = false; msg.textContent = 'Saved. Customers see the update when they next open or refresh the page.';
-  }catch(e){
-    const c = e && e.code;
-    msg.textContent = (c==='not_writer'||c==='not_granted') ? 'This account cannot edit the site.'
-      : c==='capability_disabled' ? 'Saving from the page is not available here. Send the changes to Claude instead.'
-      : c==='conflict' ? 'Someone else saved first. The page is reloading with their version; repeat your change.'
-      : 'Could not save. Try again in a moment.';
-  }finally{ btn.disabled = false; }
+    const r = await fetch('/api/save', {method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer ' + idToken}, body: JSON.stringify(DATA)});
+    if(r.status === 401){ msg.textContent = 'Your sign-in expired or is not allowed. Sign out, then sign in again at /#admin.'; return; }
+    if(!r.ok){ const j = await r.json().catch(()=>({})); msg.textContent = 'Could not save' + (j.error ? ': ' + j.error : '.'); return; }
+    dirty = false; msg.textContent = 'Saved. Customers see the update within about a minute.';
+  }catch(e){ msg.textContent = 'Could not reach the server. Try again.'; }
+  finally{ btn.disabled = false; }
+}
+function signOut(){
+  idToken = null; isAdmin = false;
+  try{ sessionStorage.removeItem('sh-admin-token'); }catch(e){}
+  try{ if(window.google && google.accounts) google.accounts.id.disableAutoSelect(); }catch(e){}
+  setEdit(false); $('#adminPill').hidden = true;
 }
 $('#adminPill').addEventListener('click', ()=>setEdit(true));
 $('#aExit').addEventListener('click', ()=>setEdit(false));
+$('#aOut').addEventListener('click', signOut);
 $('#aSave').addEventListener('click', saveData);
+window.addEventListener('hashchange', initAdminView);
 loadData();
 (async function(){
-  try{
-    if(!(window.claude && claude.use)) return;
-    const u = await claude.use('user');
-    isAdmin = !!(u && await u.canEdit());
-  }catch(e){}
-  $('#adminPill').hidden = !isAdmin;
+  let tok = null; try{ tok = sessionStorage.getItem('sh-admin-token'); }catch(e){}
+  if(tok){
+    if(await checkAdmin(tok)){ idToken = tok; isAdmin = true; $('#adminPill').hidden = false; }
+    else{ try{ sessionStorage.removeItem('sh-admin-token'); }catch(e){} }
+  }
+  initAdminView();
 })();
 </script>
 
-</body></html>
+</body>
+</html>
