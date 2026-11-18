@@ -43,7 +43,7 @@ export async function adminFrom(req) {
 // Accepts only the shape the website uses and trims everything else away.
 export function sanitize(body) {
   if (!body || typeof body !== 'object') return null;
-  const out = { prices: {}, soldOut: [], hours: {}, notice: {} };
+  const out = { prices: {}, soldOut: [], hours: {}, notice: {}, photos: {} };
 
   const prices = body.prices && typeof body.prices === 'object' ? Object.entries(body.prices) : [];
   if (prices.length > 300) return null;
@@ -59,6 +59,14 @@ export function sanitize(body) {
   for (const id of sold) {
     if (typeof id !== 'string' || !/^[a-z0-9-]{1,60}$/.test(id)) return null;
     if (!out.soldOut.includes(id)) out.soldOut.push(id);
+  }
+
+  const photos = body.photos && typeof body.photos === 'object' ? Object.entries(body.photos) : [];
+  if (photos.length > 300) return null;
+  for (const [id, v] of photos) {
+    const n = Number(v);
+    if (!/^[a-z0-9-]{1,60}$/.test(id) || !Number.isFinite(n) || n <= 0) return null;
+    out.photos[id] = Math.round(n);
   }
 
   for (const group of ['hours', 'notice']) {

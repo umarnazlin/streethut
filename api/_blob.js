@@ -68,3 +68,56 @@ export async function writeShopData(jsonText) {
   }
   throw lastErr || new Error('Blob write failed');
 }
+
+// ---- Food photos: one small JPEG per menu item, stored as photos/<id>.jpg ----
+export async function writePhoto(id, buffer) {
+  const blob = await sdk();
+  let lastErr = null;
+  for (const access of order()) {
+    try {
+      await blob.put('photos/' + id + '.jpg', buffer, {
+        access,
+        contentType: 'image/jpeg',
+        addRandomSuffix: false,
+        allowOverwrite: true,
+        cacheControlMaxAge: 60,
+      });
+      return;
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  throw lastErr || new Error('Photo write failed');
+}
+
+// Returns a Buffer with the photo, or null when there is none.
+export async function readPhoto(id) {
+  const blob = await sdk();
+  let lastErr = null;
+  let sawEmpty = false;
+  for (const access of order()) {
+    try {
+      if (typeof blob.get === 'function') {
+        const r = await blob.get('photos/' + id + '.jpg', { access });
+        if (!r || r.statusCode !== 200 || !r.stream) {
+          sawEmpty = true;
+          continue;
+        }
+        return Buffer.from(await new Response(r.stream).arrayBuffer());
+      }
+      if (access !== 'public') throw new Error('Outdated @vercel/blob');
+      const { blobs } = await blob.list({ prefix: 'photos/' + id + '.jpg', limit: 1 });
+      if (!blobs.length) {
+        sawEmpty = true;
+        continue;
+      }
+      const r = await fetch(blobs[0].url + '?v=' + Date.now(), { cache: 'no-store' });
+      if (!r.ok) throw new Error('blob ' + r.status);
+      return Buffer.from(await r.arrayBuffer());
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+  if (sawEmpty) return null;
+  throw lastErr || new Error('Photo read failed');
+}
