@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Street Hut, Mawanella. Street food cooked over fire, masala chai and badam. Order ahead on WhatsApp.">
+<link rel="icon" href="img/logo.jpg">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Street Hut Mawanella</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&family=Noto+Sans+Sinhala:wght@400;600;700&family=Noto+Sans+Tamil:wght@400;600;700&display=swap">
+<style>
+/* Layout: split hero (copy | photo), category tiles, favourites grid, WhatsApp band, review grid.
+   Dark-first (fire at night). Yellow comes from the shop sign, ember from the grill. */
+:root{
+  --bg:#0F0D0B; --surface:#181410; --surface-2:#221C16; --line:#33291F;
+  --fg:#F5EEE4; --muted:#B0A494;
+  --sun:#F6C61A; --on-sun:#17120C; --ember:#F26B21; --ember-text:#FF8F55; --cream:#E9CBA3;
+  --glow:rgba(242,107,33,.20); --shadow:0 24px 60px rgba(0,0,0,.5); --scrim:rgba(8,6,4,.62);
+  --font-display:'Barlow Condensed','Noto Sans Sinhala','Noto Sans Tamil','Arial Narrow',sans-serif;
+  --font-body:'Inter','Noto Sans Sinhala','Noto Sans Tamil',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --hdr:64px; --gut-l:max(16px,env(safe-area-inset-left,0px)); --gut-r:max(16px,env(safe-area-inset-right,0px));
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:light){
+  :root:not([data-theme="dark"]){
+    --bg:#FBF6EE; --surface:#FFFFFF; --surface-2:#F3EADB; --line:#E6D8C3;
+    --fg:#1C1611; --muted:#6B5E50; --ember:#E4571A; --ember-text:#B3450E; --cream:#8A6532;
+    --glow:rgba(228,87,26,.12); --shadow:0 18px 44px rgba(60,40,15,.14); --scrim:rgba(251,246,238,.7);
+    color-scheme:light;
+  }
+}
+:root[data-theme="light"]{
+  --bg:#FBF6EE; --surface:#FFFFFF; --surface-2:#F3EADB; --line:#E6D8C3;
+  --fg:#1C1611; --muted:#6B5E50; --ember:#E4571A; --ember-text:#B3450E; --cream:#8A6532;
+  --glow:rgba(228,87,26,.12); --shadow:0 18px 44px rgba(60,40,15,.14); --scrim:rgba(251,246,238,.7);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55;
+  padding-left:var(--gut-l);padding-right:var(--gut-r);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+html[lang="si"] body,html[lang="ta"] body{line-height:1.75}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto}
+.ico{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.display{font-family:var(--font-display);font-weight:800;text-transform:uppercase;line-height:.98;letter-spacing:.01em;margin:0}
+.up{text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;font-weight:600}
+html:not([lang="en"]) .display{text-transform:none;letter-spacing:0;line-height:1.25;font-weight:700}
+html:not([lang="en"]) .up{text-transform:none;letter-spacing:.02em;font-size:.85rem}
+
+/* header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-left:calc(var(--gut-l)*-1);margin-right:calc(var(--gut-r)*-1);padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.hdr-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.brand img{width:42px;height:42px;border-radius:50%}
+.brand span{font-family:var(--font-display);font-weight:800;font-size:1.5rem;letter-spacing:.04em;text-transform:uppercase}
+.nav{display:flex;gap:4px;order:2;min-width:0}
+.nav a{padding:8px 12px;border-radius:999px;text-decoration:none;font-weight:500;font-size:.95rem;color:var(--muted);white-space:nowrap}
+.nav a:hover{color:var(--fg)}
+.nav a[aria-current="page"]{color:var(--on-sun);background:var(--sun)}
+.tools{display:flex;align-items:center;gap:8px;order:1}
+.seg{display:flex;border:1px solid var(--line);border-radius:999px;padding:2px;background:var(--surface)}
+.seg button{border:0;background:none;padding:5px 10px;border-radius:999px;font-size:.85rem;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+.iconbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:40px;height:40px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.iconbtn:hover{border-color:var(--sun)}
+.count{min-width:20px;height:20px;border-radius:99px;background:var(--sun);color:var(--on-sun);font-size:.75rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+.count[hidden]{display:none}
+@media (max-width:760px){.nav{order:3;width:100%;overflow-x:auto;scrollbar-width:none}.brand span{font-size:1.3rem}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 24px;border-radius:999px;border:2px solid transparent;font-weight:600;text-decoration:none;font-size:1rem}
+.btn-sun{background:var(--sun);color:var(--on-sun)}
+.btn-sun:hover{filter:brightness(1.07)}
+.btn-line{border-color:var(--fg);background:none;color:var(--fg)}
+.btn-line:hover{background:var(--fg);color:var(--bg)}
+.btn-dark{background:var(--on-sun);color:var(--sun)}
+.btn-dark:hover{filter:brightness(1.25)}
+
+/* hero */
+.hero{background:radial-gradient(60% 90% at 85% 10%,var(--glow),transparent 70%)}
+.hero-in{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding-block:56px 40px}
+.hero-copy{min-width:0}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;color:var(--cream)}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 4px var(--glow)}
+.hero h1{font-size:clamp(2.8rem,7.4vw,5.6rem);margin:22px 0 18px}
+html:not([lang="en"]) .hero h1{font-size:clamp(2rem,5vw,3.6rem)}
+.hero h1 em{font-style:normal;color:var(--sun)}
+.hero p.lead{max-width:48ch;color:var(--muted);font-size:1.1rem;margin:0 0 28px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.hero-photo{position:relative;min-width:0}
+.hero-photo img.photo{width:100%;aspect-ratio:720/464;object-fit:cover;border-radius:8px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.hero-photo img.badge{position:absolute;left:-18px;bottom:-22px;width:104px;height:104px;border-radius:50%;border:4px solid var(--bg);box-shadow:var(--shadow)}
+@media (max-width:860px){.hero-in{grid-template-columns:1fr;gap:36px;padding-block:36px 28px}.hero-photo img.badge{left:12px;width:84px;height:84px}}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:8px;background:var(--surface);margin-bottom:64px}
+.strip div{padding:18px 20px;display:flex;align-items:center;gap:12px;font-weight:500;min-width:0}
+.strip div+div{border-left:1px solid var(--line)}
+.strip .ico{color:var(--sun);font-size:1.4rem}
+@media (max-width:700px){.strip{grid-template-columns:1fr}.strip div+div{border-left:0;border-top:1px solid var(--line)}}
+
+/* sections */
+.sec{padding-block:0 72px}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.sec-head h2{font-size:clamp(2rem,4.6vw,3.2rem)}
+.sec-head .up{color:var(--ember-text);display:block;margin-bottom:8px}
+.sec-head p{margin:6px 0 0;color:var(--muted);max-width:52ch}
+.link{color:var(--fg);font-weight:600;text-decoration:none;border-bottom:2px solid var(--sun);padding-bottom:2px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px}
+.tile{display:flex;flex-direction:column;gap:18px;align-items:flex-start;text-align:left;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:8px;min-width:0}
+.tile:hover{border-color:var(--sun);transform:translateY(-2px)}
+.tile .glyph{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;color:var(--on-sun);background:var(--sun)}
+.tile:nth-child(3n+2) .glyph{background:var(--ember);color:#fff}
+.tile:nth-child(3n) .glyph{background:var(--cream);color:#17120C}
+.tile h3{font-size:1.45rem}
+.tile small{color:var(--muted);display:block;margin-top:4px}
+@media (prefers-reduced-motion:no-preference){.tile{transition:transform .18s,border-color .18s}}
+
+/* item cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.item{display:flex;flex-direction:column;justify-content:space-between;gap:16px;padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:8px;min-width:0}
+.art{height:96px;border-radius:6px;display:flex;align-items:center;justify-content:center;margin:-4px -4px 0;padding:6px 0;overflow:hidden}
+.art svg{height:100%;width:auto;max-width:100%}
+.item.sold .art{filter:grayscale(1);opacity:.45}
+.art.photo{padding:0;height:auto;aspect-ratio:4/3;background:var(--surface-2)}
+.art.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.cam{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:8px;border:1px dashed var(--line);background:var(--surface-2);color:var(--muted);font-size:.7rem;overflow:hidden;cursor:pointer;flex:0 0 auto;position:relative}
+.cam img{width:100%;height:100%;object-fit:cover}
+.cam input{display:none}
+.cam.busy{opacity:.5}
+.phx{border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:6px;font:inherit;font-size:.7rem;padding:3px 7px;cursor:pointer}
+.item h3{margin:0;font-size:1.05rem;font-weight:600;line-height:1.35}
+.item .desc{margin:6px 0 0;color:var(--muted);font-size:.9rem}
+.item-foot{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.vars{display:flex;gap:6px;flex-wrap:wrap;align-items:center;min-width:0}
+.chip{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:5px 12px;font-size:.82rem;font-weight:500;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tag{font-size:.82rem;color:var(--muted)}
+.price{font-weight:600;font-variant-numeric:tabular-nums;margin-right:6px}
+.add{width:42px;height:42px;border-radius:50%;border:0;background:var(--sun);color:var(--on-sun);display:grid;place-items:center;flex:none}
+.add:hover{filter:brightness(1.08)}
+.add .ico{stroke-width:2.4}
+
+/* menu page */
+.page-head{padding-block:44px 20px}
+.page-head h1{font-size:clamp(2.6rem,6.5vw,4.6rem)}
+.page-head p{color:var(--muted);margin:12px 0 0;max-width:56ch}
+.menubar{position:sticky;top:calc(var(--hdr) + env(safe-area-inset-top,0px));z-index:15;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-left:calc(var(--gut-l)*-1);margin-right:calc(var(--gut-r)*-1);padding:10px var(--gut-r) 10px var(--gut-l)}
+.menubar-in{max-width:1180px;margin:0 auto;display:flex;gap:12px;align-items:center}
+.cats{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
+.cats button{white-space:nowrap;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;font-weight:500;font-size:.9rem}
+.cats button:hover{border-color:var(--sun)}
+.search{flex:none;width:200px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:9px 16px;font:inherit;font-size:.9rem}
+.search::placeholder{color:var(--muted)}
+@media (max-width:700px){.menubar-in{flex-direction:column;align-items:stretch}.search{width:100%}}
+@media (min-width:701px){.menubar-in{align-items:flex-start}.cats{flex-wrap:wrap;overflow:visible}.search{flex:0 0 auto}}
+.cat{padding-top:44px;scroll-margin-top:calc(var(--hdr) + 130px + env(safe-area-inset-top,0px))}
+.cat h2{font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:18px;display:flex;align-items:baseline;gap:12px}
+.cat h2 small{font-family:var(--font-body);font-size:.85rem;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0}
+.empty{padding:48px 0;color:var(--muted)}
+
+/* band */
+.band{background:var(--sun);color:var(--on-sun);border-radius:8px;padding:clamp(28px,5vw,52px);display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.band h2{font-size:clamp(2rem,5vw,3.6rem)}
+.band p{margin:10px 0 0;max-width:46ch;font-weight:500}
+
+/* reviews */
+.reviews{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.rev{margin:0;padding:22px;background:var(--surface);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-width:0}
+.rev blockquote{margin:0;font-size:1rem}
+.rev blockquote::before{content:"\201C";display:block;font-family:var(--font-display);font-size:3rem;line-height:.6;color:var(--sun);margin-bottom:8px}
+.rev figcaption{font-size:.88rem;color:var(--muted)}
+.rev figcaption b{color:var(--fg);font-weight:600;display:block}
+
+/* story + visit */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;padding-bottom:56px}
+.story p{color:var(--muted);font-size:1.08rem;margin:0 0 16px;max-width:56ch}
+.story p:first-child{color:var(--fg);font-size:1.3rem}
+.story img{width:100%;border-radius:8px;border:1px solid var(--line)}
+@media (max-width:820px){.story{grid-template-columns:1fr;gap:28px}}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.gallery figure{margin:0;min-width:0}
+.gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.gallery figcaption{font-size:.88rem;color:var(--muted);margin-top:8px}
+.visit{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:760px){.visit{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;min-width:0}
+.card h3{font-size:1.5rem;margin-bottom:14px}
+.rows{display:grid;gap:14px;margin:0}
+.rows dt{color:var(--muted);font-size:.85rem;margin:0}
+.rows dd{margin:2px 0 0;font-weight:500;overflow-wrap:anywhere}
+.rowbtns{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.btn-sm{padding:10px 18px;font-size:.92rem}
+.footer{border-top:1px solid var(--line);padding-block:32px 110px;color:var(--muted);font-size:.88rem;margin-left:calc(var(--gut-l)*-1);margin-right:calc(var(--gut-r)*-1);padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.footer-in{max-width:1180px;margin:0 auto;display:flex;gap:16px 32px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.footer img{width:44px;height:44px;border-radius:50%}
+.footer a{text-decoration:none;border-bottom:1px solid var(--line)}
+
+/* cart */
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:40;opacity:0;pointer-events:none}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,100%);background:var(--surface);border-left:1px solid var(--line);z-index:50;display:flex;flex-direction:column;
+  transform:translateX(102%);box-shadow:var(--shadow);padding-top:env(safe-area-inset-top,0px);padding-right:env(safe-area-inset-right,0px)}
+.drawer.open{transform:none}
+@media (prefers-reduced-motion:no-preference){.drawer{transition:transform .26s ease}.scrim{transition:opacity .2s}}
+.d-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.d-head h2{font-size:1.9rem}
+.d-body{flex:1;overflow-y:auto;padding:8px 20px 20px;min-height:0}
+.line{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line)}
+.line b{font-weight:600;display:block}
+.line small{color:var(--muted)}
+.qty{display:flex;align-items:center;gap:4px;flex:none}
+.qty button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);display:grid;place-items:center}
+.qty span{min-width:22px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.field{display:grid;gap:6px;margin-top:18px}
+.field>label,.field>legend{font-size:.85rem;color:var(--muted);font-weight:500;padding:0}
+fieldset.field{border:0;margin:18px 0 0;padding:0}
+.input{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:11px 14px;font:inherit}
+textarea.input{resize:vertical;min-height:64px}
+.opts{display:flex;gap:8px;flex-wrap:wrap}
+.opt{flex:1;min-width:120px;display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:8px;padding:11px 14px;background:var(--bg);cursor:pointer}
+.opt:has(input:checked){border-color:var(--sun);background:var(--surface-2)}
+.opt input{accent-color:var(--sun)}
+.opt.off{opacity:.55;cursor:not-allowed;flex-basis:100%}
+.opt.off small{display:block;color:var(--muted)}
+.soon{margin-left:auto;font-size:.72rem;font-weight:700;background:var(--surface-2);border:1px solid var(--line);border-radius:99px;padding:2px 8px}
+.d-foot{padding:16px 20px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);display:grid;gap:10px}
+.total{display:flex;justify-content:space-between;font-weight:600}
+.note{color:var(--muted);font-size:.85rem;margin:0}
+.err{color:var(--ember-text);font-size:.88rem;margin:0;min-height:1.2em}
+.cartbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:30;
+  display:flex;align-items:center;gap:12px;background:var(--sun);color:var(--on-sun);border:0;border-radius:999px;padding:14px 22px;font-weight:700;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+.cartbar[hidden]{display:none}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--fg);color:var(--bg);padding:10px 18px;border-radius:99px;font-weight:500;font-size:.9rem;opacity:0;pointer-events:none;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:no-preference){.toast{transition:opacity .2s}}
+.view[hidden]{display:none}
+/* admin + notice */
+.notice{background:var(--ember);color:#fff;text-align:center;padding:10px var(--gut-r) 10px var(--gut-l);font-weight:500;margin-left:calc(var(--gut-l)*-1);margin-right:calc(var(--gut-r)*-1)}
+.item.sold{opacity:.6}
+.soldtag{font-size:.8rem;font-weight:700;border:1px solid var(--line);border-radius:99px;padding:6px 12px;color:var(--muted);white-space:nowrap}
+.edit-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.edit-row label{font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+.pe{width:96px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:8px;padding:7px 9px;font:inherit}
+.adminpill{position:fixed;left:max(14px,env(safe-area-inset-left,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:35;background:var(--surface)}
+.asheet{position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--surface);border-top:2px solid var(--sun);padding:14px var(--gut-r) calc(14px + env(safe-area-inset-bottom,0px)) var(--gut-l);box-shadow:var(--shadow);max-height:70vh;overflow-y:auto}
+.asheet-in{max-width:1180px;margin:0 auto;display:grid;gap:12px}
+.arow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.arow strong{margin-right:auto}
+.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.agrid label{display:grid;gap:4px;font-size:.82rem;color:var(--muted)}
+.amsg{font-size:.9rem;color:var(--muted);min-height:1.3em;margin:0}
+.asheet summary{cursor:pointer;font-weight:600}
+/* compact admin editing */
+.asheet{padding-top:8px;padding-bottom:calc(8px + env(safe-area-inset-bottom,0px));max-height:46vh}
+.asheet-in{gap:6px}
+.asheet .arow{gap:6px}
+.asheet .arow strong{font-size:.9rem}
+.asheet .btn{padding:7px 12px;font-size:.82rem}
+.asheet .amsg{font-size:.78rem;min-height:0}
+.asheet summary{font-size:.85rem}
+.editing .nav,.editing .cartbar,.editing .toast{display:none!important}
+.editing .page-head{padding-block:12px 6px}
+.editing .page-head h1{font-size:1.5rem}
+.editing .page-head p{display:none}
+.editing .menubar{padding-top:6px;padding-bottom:6px}
+.editing .menubar-in{flex-direction:row;gap:8px}
+.editing .cats button{padding:5px 10px;font-size:.8rem}
+.editing .search{width:120px;padding:6px 12px;font-size:.85rem}
+.editing .cat{padding-top:16px;scroll-margin-top:calc(var(--hdr) + 60px + env(safe-area-inset-top,0px))}
+.editing .cat h2{font-size:1.2rem;margin-bottom:8px}
+.editing .cat h2 small{font-size:.75rem}
+.editing .grid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px}
+.editing #menuList{padding-bottom:50vh!important}
+.item.edit{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px;padding:8px 12px;border-radius:6px}
+.item.edit h3{flex:1 1 140px;font-size:.92rem;font-weight:600;min-width:0}
+.item.edit .edit-row{flex:0 0 auto;gap:8px}
+.item.edit .edit-row label{font-size:.75rem;gap:4px}
+.item.edit .pe{width:72px;padding:5px 7px;font-size:.9rem}
+.item.edit .sold{color:var(--muted)}
+.editing .hdr,.editing .footer{display:none}
+.asheet .arow strong,.asheet .arow a{display:none}
+.asheet .amsg{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.editing .search{width:110px}
+.item.edit{padding:6px 10px;gap:4px 8px}
+.item.edit h3{flex:1 1 130px;font-size:.88rem}
+.item.edit .edit-row{gap:6px}
+.item.edit .edit-row label{font-size:.7rem;gap:3px}
+.item.edit .pe{width:62px;padding:4px 6px;font-size:.85rem;border-radius:6px}
+.item.edit .so{width:16px;height:16px}
+.editing .grid{gap:4px}
+
+/* Small phones only: everything a bit smaller */
+@media (max-width:600px){
+html{font-size:13.5px}
+.wrap,.hdr-in,.menubar-in{padding-left:14px;padding-right:14px}
+.btn{padding:10px 16px;font-size:.9rem}
+.hero-in{gap:22px;padding-block:20px 16px}
+.hero h1{font-size:clamp(1.9rem,9vw,2.6rem);margin:12px 0 10px}
+html:not([lang="en"]) .hero h1{font-size:clamp(1.5rem,7vw,2.1rem)}
+.hero p.lead{font-size:.95rem;margin-bottom:16px}
+.hero-photo img.badge{width:64px;height:64px;bottom:-14px}
+.page-head h1{font-size:clamp(1.8rem,9vw,2.4rem)}
+.sec-head h2,.band h2{font-size:1.6rem}
+.cat h2{font-size:1.4rem;margin-bottom:10px}
+.grid{grid-template-columns:1fr 1fr;gap:8px}
+.item{padding:10px;gap:8px}
+.art{height:64px;margin:-2px -2px 0;padding:4px 0}
+.art.photo{height:auto;padding:0}
+.item h3{font-size:.92rem;line-height:1.25}
+.chip{padding:3px 8px;font-size:.72rem}
+.cats button{padding:5px 10px;font-size:.8rem}
+.card{padding:14px}
+.card h3{font-size:1.2rem;margin-bottom:8px}
+.display,.brand span{font-weight:600!important}
+.item h3,.nav a,.seg button,.chip,.cats button,.btn,.price,.link,.line b,.card h3,.cat h2 small,.strip div,.band p,.rows dd,.asheet summary{font-weight:400}
+.btn{font-weight:500}
+.item .desc{font-size:.8rem}
+}
+/* end small phones */
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-burger" viewBox="0 0 24 24"><path d="M4 10a8 6 0 0116 0z"/><path d="M3 13h18"/><path d="M4 16.2h16"/><path d="M5 19h14a1 1 0 001-1v-1.8H4V18a1 1 0 001 1z"/></symbol>
+  <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18a9 7 0 01-18 0z"/><path d="M8 8L7 4M12 8V3M16 8l1-4"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M5 10h12v4a5 5 0 01-5 5h-2a5 5 0 01-5-5v-4z"/><path d="M17 11h1.5a2.5 2.5 0 010 5H17"/><path d="M9 3c-1 1.6 1 2.6 0 4.5M13 3c-1 1.6 1 2.6 0 4.5"/></symbol>
+  <symbol id="i-glass" viewBox="0 0 24 24"><path d="M6 5h12l-1.6 14a2 2 0 01-2 1.8H9.6a2 2 0 01-2-1.8L6 5z"/><path d="M7 10h10"/><path d="M14 5l2.2-3"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><path d="M3 4h2l2.2 10.2a1 1 0 001 .8h8.6a1 1 0 001-.8L19 8H6.2"/><circle cx="9" cy="19.5" r="1.2"/><circle cx="17" cy="19.5" r="1.2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-theme" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 010 16z" fill="currentColor"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 20l1.4-4.2A8 8 0 1112 20a8 8 0 01-3.8-1z"/><path d="M9 9.5c.3 2.5 2.2 4.4 4.8 4.8l1.2-1.3-1.9-1-.9.6a3.5 3.5 0 01-1.6-1.6l.6-.9-1-1.9z"/></symbol>
+  <symbol id="i-seat" viewBox="0 0 24 24"><path d="M6 4v9M18 4v9M6 13h12M8 13v7M16 13v7M6 8h12"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
+</svg>
+
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a class="brand" href="#home" aria-label="Street Hut"><img src="img/logo.jpg" alt="" width="42" height="42"><span>Street Hut</span></a>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Language">
+        <button type="button" data-lang="en" lang="en">EN</button>
+        <button type="button" data-lang="si" lang="si">සිං</button>
+        <button type="button" data-lang="ta" lang="ta">தமிழ்</button>
+      </div>
+      <button type="button" class="iconbtn" id="themeBtn" data-i18n-aria="theme" aria-label="Switch theme"><svg class="ico"><use href="#i-theme"/></svg></button>
+      <button type="button" class="iconbtn" id="cartBtn" data-i18n-aria="cart" aria-label="Your order"><svg class="ico"><use href="#i-cart"/></svg><span class="count" id="cartCount" hidden>0</span></button>
+    </div>
+    <nav class="nav" aria-label="Main">
+      <a href="#home" data-route="home" data-i18n="nav_home">Home</a>
+      <a href="#menu" data-route="menu" data-i18n="nav_menu">Menu</a>
+      <a href="#story" data-route="story" data-i18n="nav_story">Our Story</a>
+      <a href="#visit" data-route="visit" data-i18n="nav_visit">Visit Us</a>
+    </nav>
+  </div>
+</header>
+<div class="notice" id="notice" role="status" hidden></div>
+
+<main>
+<!-- HOME -->
+<section class="view" id="v-home" hidden>
+  <div class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <span class="pill up"><i></i><span data-i18n="hero_eyebrow">Mawanella · Open daily till 1 AM</span></span>
+        <h1 class="display"><span data-i18n="hero_h1">Street food, cooked over fire.</span></h1>
+        <p class="lead" data-i18n="hero_sub">Burgers, submarines, shawarma, masala chai and badam. Dine in, take away or order ahead on WhatsApp.</p>
+        <div class="cta">
+          <a class="btn btn-sun" href="#menu"><span data-i18n="cta_order">Order now</span><svg class="ico"><use href="#i-arrow"/></svg></a>
+          <a class="btn btn-line" id="waHero" href="#" target="_blank" rel="noopener"><svg class="ico"><use href="#i-chat"/></svg><span data-i18n="cta_wa">Order on WhatsApp</span></a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <img class="photo" src="img/exterior.jpg" width="720" height="464" alt="Street Hut at night, with the lit sign and fairy lights over the street-side counter">
+        <img class="badge" src="img/logo.jpg" width="104" height="104" alt="Street Hut, established 2020">
+      </div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="strip">
+      <div><svg class="ico"><use href="#i-seat"/></svg><span data-i18n="strip_dine">Dine in</span></div>
+      <div><svg class="ico"><use href="#i-bag"/></svg><span data-i18n="strip_take">Take away</span></div>
+      <div><svg class="ico"><use href="#i-chat"/></svg><span data-i18n="strip_wa">Order ahead on WhatsApp</span></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head"><div><span class="up" data-i18n="browse_eyebrow">The menu</span><h2 class="display" data-i18n="browse">Browse the menu</h2></div></div>
+      <div class="tiles" id="tiles"></div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head"><div><span class="up" data-i18n="favs_eyebrow">From the reviews</span><h2 class="display" data-i18n="favs">Guest favourites</h2><p data-i18n="favs_sub">What guests keep mentioning.</p></div><a class="link" href="#menu" data-i18n="full_menu">Full menu</a></div>
+      <div class="grid" id="favs"></div>
+    </div>
+
+    <div class="sec">
+      <div class="band">
+        <div><h2 class="display" data-i18n="promo_h">Order ahead on WhatsApp</h2><p data-i18n="promo_p">Pick your items, send the order, and we will confirm it with you.</p></div>
+        <a class="btn btn-dark" href="#menu"><span data-i18n="cta_order">Order now</span><svg class="ico"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="sec-head"><div><span class="up" data-i18n="rev_eyebrow">Google reviews</span><h2 class="display" data-i18n="rev_h">What guests say</h2></div><a class="link" id="allReviews" href="#" target="_blank" rel="noopener" data-i18n="rev_all">Read all reviews on Google Maps</a></div>
+      <div class="reviews" id="reviews"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="view" id="v-menu" hidden>
+  <div class="wrap page-head">
+    <h1 class="display" data-i18n="menu_h">Menu</h1>
+    <p data-i18n="menu_sub">Tap + to add an item. Send your order on WhatsApp when you are ready.</p>
+  </div>
+  <div class="menubar"><div class="menubar-in">
+    <div class="cats" id="cats"></div>
+    <input class="search" id="search" type="search" data-i18n-ph="search" placeholder="Search the menu" aria-label="Search the menu">
+  </div></div>
+  <div class="wrap" id="menuList" style="padding-bottom:40px"></div>
+</section>
+
+<!-- STORY -->
+<section class="view" id="v-story" hidden>
+  <div class="wrap page-head"><h1 class="display" data-i18n="story_h">Our story</h1></div>
+  <div class="wrap">
+    <div class="story">
+      <div>
+        <p data-i18n="story_1">Street Hut opened in 2020 in Mawanella, on the road towards Kandy.</p>
+        <p data-i18n="story_2">Meat is grilled over an open fire at the front.</p>
+        <p data-i18n="story_3">We stay open late, until 1 AM.</p>
+      </div>
+      <img src="img/interior.jpg" width="720" height="478" alt="Inside Street Hut, wooden tables in front of the hand-painted coffee wall" loading="lazy">
+    </div>
+    <div class="sec">
+      <div class="sec-head"><div><span class="up" data-i18n="gal_eyebrow">Around the hut</span><h2 class="display" data-i18n="gal_h">Gallery</h2></div></div>
+      <div class="gallery">
+        <figure><img src="img/exterior.jpg" width="720" height="464" alt="" loading="lazy"><figcaption data-i18n="cap_1">Evenings on the main road</figcaption></figure>
+        <figure><img src="img/grill.jpg" width="481" height="525" alt="" loading="lazy"><figcaption data-i18n="cap_2">The open grill</figcaption></figure>
+        <figure><img src="img/interior.jpg" width="720" height="478" alt="" loading="lazy"><figcaption data-i18n="cap_3">Inside, by the coffee wall</figcaption></figure>
+        <figure><img src="img/fire.jpg" width="440" height="535" alt="" loading="lazy"><figcaption data-i18n="cap_4">The fire out front</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISIT -->
+<section class="view" id="v-visit" hidden>
+  <div class="wrap page-head"><h1 class="display" data-i18n="visit_h">Visit Street Hut</h1></div>
+  <div class="wrap" style="padding-bottom:56px">
+    <div class="visit">
+      <div class="card">
+        <h3 class="display" data-i18n="find">Find us</h3>
+        <dl class="rows">
+          <div><dt data-i18n="addr_l">Address</dt><dd data-i18n="addr_v">Hinguloya, Mawanella, towards Kandy</dd></div>
+          <div><dt data-i18n="hours_l">Hours</dt><dd data-i18n="hours_v">Daily, until 1:00 AM</dd></div>
+        </dl>
+        <div class="rowbtns"><a class="btn btn-sun btn-sm" id="mapBtn" href="#" target="_blank" rel="noopener" data-i18n="open_maps">Open in Google Maps</a></div>
+      </div>
+      <div class="card">
+        <h3 class="display" data-i18n="reach">Reach us</h3>
+        <dl class="rows">
+          <div><dt data-i18n="phone_l">Phone and WhatsApp</dt><dd id="phoneTxt">+94 77 114 4742</dd></div>
+          <div><dt>Instagram</dt><dd>@street_hut.sl</dd></div>
+        </dl>
+        <div class="rowbtns">
+          <a class="btn btn-sun btn-sm" id="waVisit" href="#" target="_blank" rel="noopener"><svg class="ico"><use href="#i-chat"/></svg><span data-i18n="cta_wa">Order on WhatsApp</span></a>
+          <button type="button" class="btn btn-line btn-sm" id="copyPhone" data-i18n="copy">Copy number</button>
+          <a class="btn btn-line btn-sm" id="igBtn" href="#" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ADMIN (not linked from the menu; reached at /#admin) -->
+<section class="view" id="v-admin" hidden>
+  <div class="wrap page-head"><h1 class="display">Admin</h1><p>Sign in with an approved Google account to edit prices, sold-out items, opening hours and the notice banner.</p></div>
+  <div class="wrap" style="padding-bottom:56px"><div id="gsiBtn"></div><p class="amsg" id="adminStatus" role="status" style="margin-top:16px"></p></div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-in">
+  <div style="display:flex;align-items:center;gap:12px"><img src="img/logo.jpg" alt="" width="44" height="44"><span>© Street Hut, Mawanella · Estd. 2020</span></div>
+  <span data-i18n="foot">Reviews are quoted from Google Maps and credited to their authors.</span>
+</div></footer>
+
+<button type="button" class="btn btn-line btn-sm adminpill" id="adminPill" hidden>Admin</button>
+<section class="asheet" id="asheet" hidden aria-label="Admin">
+  <div class="asheet-in">
+    <div class="arow"><strong>Admin edit mode</strong><a class="btn btn-line btn-sm" href="#menu">Edit menu prices</a><button type="button" class="btn btn-sun btn-sm" id="aSave">Save changes</button><button type="button" class="btn btn-line btn-sm" id="aExit">Exit</button><button type="button" class="btn btn-line btn-sm" id="aOut">Sign out</button></div>
+    <p class="amsg" id="aMsg" role="status">Admin edit mode: type prices in Rs, then press Save changes.</p>
+    <details><summary>Opening hours and notice banner</summary>
+      <div class="agrid" style="margin-top:12px">
+        <label>Opening hours, English<input class="input" data-f="hours.en" placeholder="Daily, until 1:00 AM"></label>
+        <label>Opening hours, Sinhala<input class="input" data-f="hours.si" lang="si"></label>
+        <label>Opening hours, Tamil<input class="input" data-f="hours.ta" lang="ta"></label>
+        <label>Notice banner, English<input class="input" data-f="notice.en" placeholder="Closed on Poya day"></label>
+        <label>Notice banner, Sinhala<input class="input" data-f="notice.si" lang="si"></label>
+        <label>Notice banner, Tamil<input class="input" data-f="notice.ta" lang="ta"></label>
+      </div>
+    </details>
+  </div>
+</section>
+<button type="button" class="cartbar" id="cartbar" hidden><svg class="ico"><use href="#i-cart"/></svg><span id="cartbarTxt"></span></button>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" aria-hidden="true" inert>
+  <div class="d-head"><h2 class="display" id="dTitle" data-i18n="cart">Your order</h2><button type="button" class="iconbtn" id="dClose" data-i18n-aria="close" aria-label="Close"><svg class="ico"><use href="#i-close"/></svg></button></div>
+  <div class="d-body" id="dBody"></div>
+  <div class="d-foot" id="dFoot">
+    <div class="total" id="totalRow"></div>
+    <p class="note" id="totalNote"></p>
+    <p class="err" id="err" role="alert"></p>
+    <a class="btn btn-sun" id="sendWa" href="#" target="_blank" rel="noopener"><svg class="ico"><use href="#i-chat"/></svg><span data-i18n="send_wa">Send order on WhatsApp</span></a>
+  </div>
+</aside>
+
+<script>
+/* ---------- Shop details (edit here) ---------- */
+const WA = '94771144742';
+const PHONE = '+94 77 114 4742';
+const MAPS = 'https://www.google.com/maps/search/?api=1&query=7.2498324,80.4535246';
+const IG = 'https://www.instagram.com/street_hut.sl/';
+/* Shop data an admin can change. The live copy is shop-data.json next to this page; these defaults apply if it cannot be loaded.
+   prices: 'item-id|variant-index' -> rupees, for example 'chicken-shawarma|0': 650. An item with no price shows none;
+   totals appear once every item in the order has a price. soldOut: list of item ids. */
+let DATA = {photos:{}, prices:{}, soldOut:[], hours:{en:'',si:'',ta:''}, notice:{en:'',si:'',ta:''}};
+let isAdmin = false, editMode = false, dirty = false;
+
+/* ---------- Menu ---------- */
+const CATS = [
+  {id:"bites", icon:"burger", n:{en:"Street Bites", si:"වීදි කෑම", ta:"தெருவோர உணவு"}},
+  {id:"rice", icon:"bowl", n:{en:"Rice", si:"රයිස්", ta:"ரைஸ்"}},
+  {id:"kotthu", icon:"bowl", n:{en:"Kotthu & Dolphin", si:"කොත්තු සහ ඩොල්ෆින්", ta:"கொத்து & டால்பின்"}},
+  {id:"noodles", icon:"bowl", n:{en:"Noodles & Pasta", si:"නූඩ්ල්ස් සහ පාස්තා", ta:"நூடுல்ஸ் & பாஸ்தா"}},
+  {id:"chai", icon:"cup", n:{en:"Chai", si:"චායි", ta:"சாய்"}},
+  {id:"coffee", icon:"cup", n:{en:"Coffee", si:"කෝපි", ta:"காபி"}},
+  {id:"hot", icon:"cup", n:{en:"Hot Drinks", si:"උණු බීම", ta:"சூடான பானங்கள்"}},
+  {id:"cold", icon:"glass", n:{en:"Cold Drinks", si:"සීතල බීම", ta:"குளிர் பானங்கள்"}},
+  {id:"juice", icon:"glass", n:{en:"Fresh Juice", si:"පලතුරු යුෂ", ta:"பழச்சாறு"}},
+  {id:"shakes", icon:"glass", n:{en:"Milkshakes", si:"මිල්ක්ෂේක්", ta:"மில்க்ஷேக்"}},
+  {id:"mojito", icon:"glass", n:{en:"Mojito", si:"මොහිටෝ", ta:"மொஹிட்டோ"}},
+  {id:"floats", icon:"glass", n:{en:"Floats, Boba & Lassi", si:"ෆ්ලෝට්, බෝබා සහ ලැසි", ta:"ஃப்ளோட், போபா & லஸ்ஸி"}}
+];
+const slug = s => s.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const ITEMS = [];
+function add(cat, name, variants, desc){ ITEMS.push({id:slug(name), cat, name, variants:variants||[''], desc:desc||''}); }
+add("bites","Crispy Chicken Cheese Burger",null);
+add("bites","Masala Crispy Chicken Burger",["Medium"]);
+add("bites","Chunky Chicken Sandwich",null);
+add("bites","Chunky Chicken Submarine",["Large", "Medium"]);
+add("bites","Crispy Chicken Submarine",["Large"]);
+add("bites","Chicken Shawarma",null);
+add("bites","Hot Dog Cheese",null);
+add("bites","Crispy Chicken Drumlet",["Each"]);
+add("rice","Chicken Fried Rice",["Regular", "Large"]);
+add("rice","Beef Fried Rice",["Regular", "Large"]);
+add("rice","Seafood Fried Rice",["Regular", "Large"]);
+add("rice","Mix Fried Rice",["Regular", "Large"]);
+add("rice","BBQ Fried Rice",null);
+add("rice","Crispy Chicken Fried Rice",null);
+add("rice","Chicken Nasi Goreng",null);
+add("rice","Beef Nasi Goreng",null);
+add("rice","Seafood Nasi Goreng",null);
+add("rice","Mix Nasi Goreng",null);
+add("rice","Chicken Mongolian Rice",null);
+add("rice","Beef Mongolian Rice",null);
+add("rice","Seafood Mongolian Rice",null);
+add("rice","Mix Mongolian Rice",null);
+add("rice","Chicken Garlic Rice",null);
+add("rice","Beef Garlic Rice",null);
+add("kotthu","Chicken Kotthu",["Regular", "Large"]);
+add("kotthu","Beef Kotthu",["Regular", "Large"]);
+add("kotthu","Seafood Kotthu",["Regular", "Large"]);
+add("kotthu","Mixed Kotthu",["Regular", "Large"]);
+add("kotthu","Chicken Cheese Kotthu",["Regular", "Large"]);
+add("kotthu","Beef Cheese Kotthu",["Regular", "Large"]);
+add("kotthu","Creamy Kotthu",["Regular", "Large"]);
+add("kotthu","String Hoppers Kotthu",["Regular", "Large"]);
+add("kotthu","Chicken Dolphin",["Large"]);
+add("kotthu","Beef Dolphin",["Large"]);
+add("noodles","Chicken Noodles",["Regular", "Large"]);
+add("noodles","Beef Noodles",["Regular", "Large"]);
+add("noodles","Milky Pasta",null);
+add("noodles","Pasta",null);
+add("chai","Masala Chai",null);
+add("chai","Cardamom Chai",null);
+add("chai","Cinnamon Chai",null);
+add("chai","Tea",["Regular"]);
+add("chai","Sukku Chai",null);
+add("coffee","Black Coffee",null);
+add("coffee","Bru Coffee",null);
+add("coffee","Milk Coffee",null);
+add("coffee","Masala Coffee",null);
+add("coffee","Nescafe",null);
+add("hot","Hot Badam",null);
+add("hot","Hot Date Milk",null);
+add("hot","Hot Milo",null);
+add("hot","Hot Chocolate",null);
+add("hot","Hot Choco Badam",null);
+add("hot","Hot Strawberry",null);
+add("hot","Real Lime",null);
+add("cold","Iced Badam",null);
+add("cold","Iced Milo",null);
+add("cold","Faluda",null);
+add("cold","Iced Coffee",null);
+add("cold","Sanja Badam",null,"Jelly and grated almond in every sip. Natural jelly and almond seeds.");
+add("juice","Lime Juice",null);
+add("juice","Mango Juice",null);
+add("juice","Papaya Juice",null);
+add("juice","Lime & Mint Juice",null);
+add("juice","Watermelon Juice",null);
+add("shakes","Banana Milkshake",null);
+add("shakes","Mango Milkshake",null);
+add("shakes","Chocolate Milkshake",null);
+add("shakes","Vanilla Milkshake",null);
+add("shakes","Avocado Milkshake",null);
+add("shakes","Butterscotch Milkshake",null);
+add("shakes","Durian Milkshake",null);
+add("shakes","Strawberry Milkshake",null);
+add("mojito","Lime & Mint Mojito",null);
+add("mojito","Strawberry Mojito",null);
+add("mojito","Apple Mojito",null);
+add("mojito","Blackcurrant Mojito",null);
+add("mojito","Passion Mojito",null);
+add("mojito","Bubblegum Mojito",null);
+add("mojito","Blue Lime Mojito",null);
+add("mojito","Green Apple Mojito",null);
+add("mojito","Guava Mojito",null);
+add("mojito","Lychee Mojito",null);
+add("floats","Passion Float",null);
+add("floats","Blue Ocean Float",null);
+add("floats","Strawberry Float",null);
+add("floats","Milo Boba",null);
+add("floats","Choco Boba",null);
+add("floats","Strawberry Boba",null);
+add("floats","Regular Lassi",null);
+add("floats","Mango Lassi",null);
+const BY = Object.fromEntries(ITEMS.map(i=>[i.id,i]));
+const FAVS = ['chicken-shawarma', 'masala-chai', 'sanja-badam', 'hot-dog-cheese', 'blackcurrant-mojito', 'chunky-chicken-submarine'];
+
+const REVIEWS = [
+  {who:'Shakir Explores', t:'Great spot in town for dinner with friends or family. Warm vibe with nice ambient lighting. Good range of drinks—blackcurrant mojito and masala chai are must-tries.'},
+  {who:'Shalaka Gamage', t:'I tried the famous BBQ Chicken Leg with 2 Parottas, vegetable salad, and white mayonnaise sauce at Street Hut — it was absolutely delicious! The chicken was perfectly grilled, and full of smoky flavor.'},
+  {who:'Roshen Wijesundara', t:'This is by far one of the best places I had lunch in Mawanella. The food was extremely delicious and they serve huge portions which is definitely the biggest I have ever seen in the island.'},
+  {who:'Sahl Mawsoon', t:'Street hut chai is fabulous than Colombo chaiwala, and street hut chicken bun is top notch.'},
+  {who:'Danuja Jayasuriya', t:'As a habit I stop my car here whenever I coming back from colombo to have a gulab jamun and a masala chai and it is great!'},
+  {who:'Fathima Shamha', t:'Loved the Chai and Badam milk. They also has varieties of plain-tea.'}
+];
+
+/* ---------- Translations ---------- */
+const T = {
+en:{
+ nav_home:'Home',nav_menu:'Menu',nav_story:'Our Story',nav_visit:'Visit Us',theme:'Switch theme',cart:'Your order',close:'Close',
+ hero_eyebrow:'Mawanella · Open daily till 1 AM',hero_h1:'Street food, cooked over fire.',
+ hero_sub:'Burgers, submarines, shawarma, masala chai and badam. Dine in, take away or order ahead on WhatsApp.',
+ cta_order:'Order now',cta_wa:'Order on WhatsApp',strip_dine:'Dine in',strip_take:'Take away',strip_wa:'Order ahead on WhatsApp',
+ browse_eyebrow:'The menu',browse:'Browse the menu',favs_eyebrow:'From the reviews',favs:'Guest favourites',favs_sub:'What guests keep mentioning.',full_menu:'Full menu',
+ promo_h:'Order ahead on WhatsApp',promo_p:'Pick your items, send the order, and we will confirm it with you.',
+ rev_eyebrow:'Google reviews',rev_h:'What guests say',rev_all:'Read all reviews on Google Maps',
+ menu_h:'Menu',menu_sub:'Tap + to add an item. Send your order on WhatsApp when you are ready.',search:'Search the menu',no_results:'Nothing matches your search.',items:'{n} items',
+ story_h:'Our story',story_1:'Street Hut opened in 2020 in Mawanella, on the road towards Kandy.',
+ story_2:'Meat is grilled over an open fire at the front. At the counter you will find masala chai, badam, fresh juices and milkshakes, along with burgers, submarines and shawarma.',
+ story_3:'We stay open late, until 1 AM. Dine in, take away, or send your order ahead on WhatsApp.',
+ gal_eyebrow:'Around the hut',gal_h:'Gallery',cap_1:'Evenings on the main road',cap_2:'The open grill',cap_3:'Inside, by the coffee wall',cap_4:'The fire out front',
+ visit_h:'Visit Street Hut',find:'Find us',addr_l:'Address',addr_v:'Hinguloya, Mawanella, towards Kandy',hours_l:'Hours',hours_v:'Daily, until 1:00 AM',open_maps:'Open in Google Maps',
+ reach:'Reach us',phone_l:'Phone and WhatsApp',copy:'Copy number',copied:'Number copied',foot:'Reviews are quoted from Google Maps and credited to their authors.',
+ add:'Add',added:'Added to your order',cart_empty:'Your order is empty. Add something from the menu.',view_order:'View order',n_items:'{n} items',
+ order_type:'Order type',dine:'Dine in',take:'Take away',name:'Your name',note_l:'Note for the kitchen (optional)',payment:'Payment',pay_counter:'Pay at the shop',
+ pay_card:'Pay online by card (Visa, Mastercard)',soon:'Coming soon',pay_card_note:'Online card payment will switch on once the shop connects a payment gateway.',
+ sold:'Sold out',total:'Total',total_note:'The final total is confirmed with you on WhatsApp.',send_wa:'Send order on WhatsApp',name_needed:'Please enter your name.',clear:'Clear order',
+ wa_hello:'Hello Street Hut, I would like to place an order.'
+},
+si:{
+ nav_home:'මුල් පිටුව',nav_menu:'මෙනුව',nav_story:'අපේ කතාව',nav_visit:'අප හමුවන්න',theme:'තේමාව මාරු කරන්න',cart:'ඔබේ ඇණවුම',close:'වසන්න',
+ hero_eyebrow:'මාවනැල්ල · සෑම දිනකම රාත්‍රී 1 දක්වා විවෘතයි',hero_h1:'ගින්නෙන් පිසූ වීදි කෑම.',
+ hero_sub:'බර්ගර්, සබ්මැරීන්, ෂවර්මා, මසාලා චායි සහ බදාම්. ආපනශාලාවේ කන්න, රැගෙන යන්න, නැතහොත් WhatsApp හරහා කලින් ඇණවුම් කරන්න.',
+ cta_order:'දැන් ඇණවුම් කරන්න',cta_wa:'WhatsApp හරහා ඇණවුම',strip_dine:'ආපනශාලාවේ කන්න',strip_take:'රැගෙන යන්න',strip_wa:'WhatsApp හරහා කලින් ඇණවුම',
+ browse_eyebrow:'මෙනුව',browse:'මෙනුව බලන්න',favs_eyebrow:'සමාලෝචනවලින්',favs:'අමුත්තන්ගේ ප්‍රියතම',favs_sub:'අමුත්තන් නිතර සඳහන් කරන දේ.',full_menu:'සම්පූර්ණ මෙනුව',
+ promo_h:'WhatsApp හරහා කලින් ඇණවුම් කරන්න',promo_p:'ඔබේ අයිතම තෝරා ඇණවුම යවන්න. අපි ඔබට තහවුරු කරන්නෙමු.',
+ rev_eyebrow:'Google සමාලෝචන',rev_h:'අමුත්තන් පවසන දේ',rev_all:'Google Maps හි සියලු සමාලෝචන කියවන්න',
+ menu_h:'මෙනුව',menu_sub:'අයිතමයක් එක් කිරීමට + ඔබන්න. සූදානම් වූ විට WhatsApp හරහා ඇණවුම යවන්න.',search:'මෙනුවේ සොයන්න',no_results:'ඔබේ සෙවුමට ගැළපෙන කිසිවක් නැත.',items:'අයිතම {n}',
+ story_h:'අපේ කතාව',story_1:'Street Hut 2020 වසරේ මාවනැල්ලේ, මහනුවර පාරේ ආරම්භ විය.',
+ story_2:'ඉදිරිපස විවෘත ගින්නෙන් මස් ඉව කරයි. කවුන්ටරයේදී මසාලා චායි, බදාම්, පලතුරු යුෂ සහ මිල්ක්ෂේක් මෙන්ම බර්ගර්, සබ්මැරීන් සහ ෂවර්මා ද ලබාගත හැක.',
+ story_3:'අපි රාත්‍රී 1 දක්වා විවෘතයි. ආපනශාලාවේ කන්න, රැගෙන යන්න, නැතහොත් WhatsApp හරහා කලින් ඇණවුම යවන්න.',
+ gal_eyebrow:'කුටිය අවට',gal_h:'ඡායාරූප',cap_1:'ප්‍රධාන පාරේ සවස්වරු',cap_2:'විවෘත ග්‍රිල් එක',cap_3:'ඇතුළත, කෝපි බිත්තිය අසල',cap_4:'ඉදිරිපස ගින්න',
+ visit_h:'Street Hut වෙත පැමිණෙන්න',find:'අපව සොයාගන්න',addr_l:'ලිපිනය',addr_v:'හිංගුලෝය, මාවනැල්ල, මහනුවර දිශාවට',hours_l:'වේලාවන්',hours_v:'දිනපතා, රාත්‍රී 1:00 දක්වා',open_maps:'Google Maps හි විවෘත කරන්න',
+ reach:'අප අමතන්න',phone_l:'දුරකථන සහ WhatsApp',copy:'අංකය පිටපත් කරන්න',copied:'අංකය පිටපත් කළා',foot:'සමාලෝචන Google Maps වෙතින් උපුටා ගත් අතර ලේඛකයන්ට ගෞරවය හිමි වේ.',
+ add:'එක් කරන්න',added:'ඔබේ ඇණවුමට එක් කළා',cart_empty:'ඔබේ ඇණවුම හිස්ය. මෙනුවෙන් යමක් එක් කරන්න.',view_order:'ඇණවුම බලන්න',n_items:'අයිතම {n}',
+ order_type:'ඇණවුම් වර්ගය',dine:'ආපනශාලාවේ',take:'රැගෙන යන්න',name:'ඔබේ නම',note_l:'කුස්සියට සටහනක් (අවශ්‍ය නම්)',payment:'ගෙවීම',pay_counter:'කඩයේදී ගෙවන්න',
+ pay_card:'කාඩ්පතෙන් ඔන්ලයින් ගෙවන්න (Visa, Mastercard)',soon:'ඉක්මනින්',pay_card_note:'කඩය ගෙවීම් ගේට්වේ එකක් සම්බන්ධ කළ පසු ඔන්ලයින් කාඩ් ගෙවීම් සක්‍රීය වේ.',
+ sold:'අවසන්',total:'මුළු මුදල',total_note:'අවසන් මුළු මුදල WhatsApp හරහා ඔබට තහවුරු කෙරේ.',send_wa:'WhatsApp හරහා ඇණවුම යවන්න',name_needed:'කරුණාකර ඔබේ නම ඇතුළත් කරන්න.',clear:'ඇණවුම හිස් කරන්න',
+ wa_hello:'Hello Street Hut, I would like to place an order.'
+},
+ta:{
+ nav_home:'முகப்பு',nav_menu:'மெனு',nav_story:'எங்கள் கதை',nav_visit:'எங்களைச் சந்திக்க',theme:'தீமை மாற்று',cart:'உங்கள் ஆர்டர்',close:'மூடு',
+ hero_eyebrow:'மாவனெல்லை · தினமும் அதிகாலை 1 மணி வரை திறந்திருக்கும்',hero_h1:'நெருப்பில் சமைத்த தெருவோர உணவு.',
+ hero_sub:'பர்கர், சப்மரீன், ஷவர்மா, மசாலா சாய் மற்றும் பாதாம். இங்கேயே சாப்பிடலாம், பார்சல் எடுக்கலாம் அல்லது WhatsApp மூலம் முன்கூட்டியே ஆர்டர் செய்யலாம்.',
+ cta_order:'இப்போதே ஆர்டர் செய்யுங்கள்',cta_wa:'WhatsApp-இல் ஆர்டர்',strip_dine:'இங்கேயே சாப்பிட',strip_take:'பார்சல்',strip_wa:'WhatsApp-இல் முன்கூட்டியே ஆர்டர்',
+ browse_eyebrow:'மெனு',browse:'மெனுவைப் பாருங்கள்',favs_eyebrow:'விமர்சனங்களிலிருந்து',favs:'விருந்தினர்களின் விருப்பம்',favs_sub:'விருந்தினர்கள் அடிக்கடி குறிப்பிடுபவை.',full_menu:'முழு மெனு',
+ promo_h:'WhatsApp-இல் முன்கூட்டியே ஆர்டர் செய்யுங்கள்',promo_p:'உணவுகளைத் தேர்ந்தெடுத்து ஆர்டரை அனுப்புங்கள். நாங்கள் உறுதிப்படுத்துவோம்.',
+ rev_eyebrow:'Google விமர்சனங்கள்',rev_h:'விருந்தினர்கள் கூறுவது',rev_all:'Google Maps-இல் அனைத்து விமர்சனங்களையும் படிக்க',
+ menu_h:'மெனு',menu_sub:'உணவைச் சேர்க்க + அழுத்துங்கள். தயாரானதும் WhatsApp மூலம் ஆர்டரை அனுப்புங்கள்.',search:'மெனுவில் தேடுங்கள்',no_results:'உங்கள் தேடலுக்குப் பொருத்தமானது எதுவுமில்லை.',items:'{n} உணவுகள்',
+ story_h:'எங்கள் கதை',story_1:'Street Hut 2020-ல் மாவனெல்லையில், கண்டி செல்லும் சாலையில் தொடங்கப்பட்டது.',
+ story_2:'முன்புறம் திறந்த நெருப்பில் இறைச்சி கிரில் செய்யப்படுகிறது. கவுண்டரில் மசாலா சாய், பாதாம், பழச்சாறுகள், மில்க்ஷேக்குகளுடன் பர்கர், சப்மரீன், ஷவர்மாவும் கிடைக்கும்.',
+ story_3:'நாங்கள் அதிகாலை 1 மணி வரை திறந்திருக்கிறோம். இங்கேயே சாப்பிடலாம், பார்சல் எடுக்கலாம் அல்லது WhatsApp மூலம் முன்கூட்டியே ஆர்டர் அனுப்பலாம்.',
+ gal_eyebrow:'குடிலைச் சுற்றி',gal_h:'படங்கள்',cap_1:'பிரதான சாலையில் மாலைகள்',cap_2:'திறந்த கிரில்',cap_3:'உள்ளே, காபி சுவர் அருகில்',cap_4:'முன்புறம் எரியும் நெருப்பு',
+ visit_h:'Street Hut-க்கு வாருங்கள்',find:'எங்களைக் கண்டுபிடிக்க',addr_l:'முகவரி',addr_v:'ஹிங்குலோய, மாவனெல்லை, கண்டி திசையில்',hours_l:'நேரம்',hours_v:'தினமும், அதிகாலை 1:00 மணி வரை',open_maps:'Google Maps-இல் திற',
+ reach:'தொடர்புக்கு',phone_l:'தொலைபேசி மற்றும் WhatsApp',copy:'எண்ணை நகலெடு',copied:'எண் நகலெடுக்கப்பட்டது',foot:'விமர்சனங்கள் Google Maps-இலிருந்து எடுக்கப்பட்டு எழுதியவர்களுக்குப் பெருமை சேர்க்கப்பட்டுள்ளது.',
+ add:'சேர்',added:'உங்கள் ஆர்டரில் சேர்க்கப்பட்டது',cart_empty:'உங்கள் ஆர்டர் காலியாக உள்ளது. மெனுவிலிருந்து ஏதாவது சேர்க்கவும்.',view_order:'ஆர்டரைப் பார்',n_items:'{n} உணவுகள்',
+ order_type:'ஆர்டர் வகை',dine:'இங்கேயே சாப்பிட',take:'பார்சல்',name:'உங்கள் பெயர்',note_l:'சமையலறைக்கு குறிப்பு (விருப்பம்)',payment:'கட்டணம்',pay_counter:'கடையில் செலுத்துங்கள்',
+ pay_card:'கார்டு மூலம் ஆன்லைனில் செலுத்துங்கள் (Visa, Mastercard)',soon:'விரைவில்',pay_card_note:'கடை கட்டண வாசலை இணைத்ததும் ஆன்லைன் கார்டு கட்டணம் செயல்படும்.',
+ sold:'தீர்ந்துவிட்டது',total:'மொத்தம்',total_note:'இறுதித் தொகை WhatsApp-இல் உறுதிப்படுத்தப்படும்.',send_wa:'WhatsApp-இல் ஆர்டரை அனுப்பு',name_needed:'உங்கள் பெயரை உள்ளிடவும்.',clear:'ஆர்டரை அழி',
+ wa_hello:'Hello Street Hut, I would like to place an order.'
+}};
+
+/* ---------- State ---------- */
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+};
+let lang = store.get('sh-lang'); if(!T[lang]) lang = 'en';
+let cart = []; try{ cart = JSON.parse(store.get('sh-cart')||'[]').filter(c=>BY[c.id]); }catch(e){ cart = []; }
+let sel = {};            // chosen variant per item id
+let orderType = 'dine', custName = '', custNote = '', query = '';
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const t = k => (T[lang][k] ?? T.en[k] ?? k);
+const money = n => 'Rs ' + n.toLocaleString('en-US');
+const priceOf = (id,vi) => DATA.prices[id+'|'+vi];
+const isSold = id => DATA.soldOut.includes(id);
+const catName = c => c.n[lang] || c.n.en;
+
+/* ---------- Render ---------- */
+function icon(n){ return `<svg class="ico"><use href="#i-${n}"/></svg>`; }
+function cardHTML(it){ return (editMode && isAdmin) ? cardEdit(it) : cardView(it); }
+function cardEdit(it){
+  const rows = it.variants.map((v,i)=>`<label>${v||'Rs'}<input class="pe" type="number" min="0" step="10" inputmode="numeric" data-key="${it.id}|${i}" value="${priceOf(it.id,i)||''}" placeholder="Rs" aria-label="${it.name} ${v||'price'}"></label>`).join('');
+  const has = DATA.photos && DATA.photos[it.id];
+  const cam = `<label class="cam" title="Photo">${has?`<img alt="" src="${photoURL(it.id)}">`:'Photo'}<input type="file" accept="image/*" class="ph" data-id="${it.id}"></label>`;
+  const del = has ? `<button type="button" class="phx" data-id="${it.id}" aria-label="Remove photo">Remove photo</button>` : '';
+  return `<article class="item edit" data-id="${it.id}">${cam}<h3>${it.name}</h3><div class="edit-row">${rows}${del}<label class="sold"><input type="checkbox" class="so" data-id="${it.id}" ${isSold(it.id)?'checked':''}>Sold out</label></div></article>`;
+}
+/* ---------- Drawn food and drink illustrations (no photos needed) ---------- */
+const OUT='rgba(110,85,60,.55)';
+const sv = b => `<svg viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${b}</svg>`;
+const FLAV = [
+  [/strawberry/,'#ff5d8f'],[/bubblegum/,'#ff8fd0'],[/blue/,'#34b3f0'],[/blackcurrant/,'#7a45b0'],
+  [/green apple/,'#8fd94a'],[/apple/,'#9bd84f'],[/lime|mint/,'#79d86b'],[/guava/,'#ff7b8a'],[/lychee/,'#f6c9d4'],
+  [/watermelon/,'#ff5c6c'],[/papaya/,'#ffa24a'],[/mango/,'#ffb52e'],[/passion/,'#ffa21a'],[/banana/,'#ffe27a'],
+  [/choco|chocolate|milo/,'#8a5230'],[/vanilla/,'#f6e7b8'],[/avocado/,'#a8c95b'],[/butterscotch/,'#e0a64a'],
+  [/durian/,'#e9d36c'],[/faluda/,'#f08fb4'],[/badam|date|lassi/,'#f2dfc0'],
+  [/coffee|bru|nescafe/,'#6a4128'],[/chai|tea|masala|cardamom|cinnamon|sukku/,'#c98a4b'],[/lime/,'#79d86b']
+];
+function flav(name){const n=name.toLowerCase();for(const [r,c] of FLAV) if(r.test(n)) return c;return '#e8a23d'}
+const STEAM = '<path d="M30 14c-3-3 3-5 0-9M40 14c-3-3 3-5 0-9M50 14c-3-3 3-5 0-9" fill="none" stroke="rgba(120,100,80,.45)" stroke-width="2" stroke-linecap="round"/>';
+function glass(liq, top, extra){
+  return `<path d="M27 10h26l-4 46H31z" fill="rgba(255,255,255,.4)" stroke="${OUT}" stroke-width="1.6" stroke-linejoin="round"/>
+  <path d="M28 20h24l-3.2 35H31.2z" fill="${liq}"/>${extra||''}
+  <path d="M30 12l1 36" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"/>${top||''}`;
+}
+const STRAW = '<path d="M47 3L42 36" stroke="#ff5d5d" stroke-width="3" stroke-linecap="round"/><path d="M46.4 6l-.9 5" stroke="#fff" stroke-width="3" stroke-linecap="round"/>';
+const ICE = '<rect x="32" y="22" width="8" height="8" rx="2" fill="rgba(255,255,255,.55)" transform="rotate(-12 36 26)"/><rect x="41" y="30" width="8" height="8" rx="2" fill="rgba(255,255,255,.5)" transform="rotate(10 45 34)"/>';
+function cup(liq){
+  return `${STEAM}<ellipse cx="38" cy="54" rx="26" ry="4" fill="rgba(0,0,0,.12)"/>
+  <path d="M16 22h44v12c0 10-8 18-18 18h-8c-10 0-18-8-18-18z" fill="#fffaf0" stroke="${OUT}" stroke-width="1.6"/>
+  <ellipse cx="38" cy="22" rx="22" ry="4.5" fill="${liq}" stroke="${OUT}" stroke-width="1.4"/>
+  <path d="M60 26c9-1 9 13-2 13" fill="none" stroke="${OUT}" stroke-width="3" stroke-linecap="round"/>
+  <path d="M22 30v8" stroke="rgba(255,255,255,.9)" stroke-width="2.5" stroke-linecap="round"/>`;
+}
+function bowl(fill, body, extra){
+  return `<ellipse cx="40" cy="54" rx="26" ry="3.5" fill="rgba(0,0,0,.12)"/>
+  <path d="M10 30h60c0 14-11 24-30 24S10 44 10 30z" fill="${body}" stroke="${OUT}" stroke-width="1.6"/>
+  <path d="M12 32c4-14 12-20 28-20s24 6 28 20z" fill="${fill}"/>${extra||''}
+  <path d="M18 36c2 6 6 10 12 12" stroke="rgba(255,255,255,.55)" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+}
+const SPECK = (cols)=>{const pts=[[24,26],[32,20],[40,26],[48,19],[56,26],[28,31],[44,30],[52,31],[36,16],[60,30]];
+  return pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.2" fill="${cols[i%cols.length]}"/>`).join('')};
+function artFor(it){
+  const n=it.name.toLowerCase(), c=flav(it.name);
+  const prot = /chicken/.test(n)?'#f6d9a0':/beef/.test(n)?'#6a3b22':/seafood/.test(n)?'#ff8a6b':/mix/.test(n)?'#ff8a6b':'#f6d9a0';
+  const specks = /mix/.test(n)?['#f6d9a0','#6a3b22','#ff8a6b','#6bbf59']:[prot,'#6bbf59','#f08a24'];
+  switch(it.cat){
+  case 'bites':
+    if(/burger/.test(n)) return sv(`<ellipse cx="40" cy="55" rx="24" ry="3" fill="rgba(0,0,0,.12)"/><path d="M14 30c0-14 12-22 26-22s26 8 26 22z" fill="#e8a23d" stroke="${OUT}" stroke-width="1.5"/><g fill="#fff4cf"><ellipse cx="28" cy="18" rx="2" ry="1.1"/><ellipse cx="40" cy="14" rx="2" ry="1.1"/><ellipse cx="52" cy="18" rx="2" ry="1.1"/><ellipse cx="34" cy="24" rx="2" ry="1.1"/><ellipse cx="47" cy="24" rx="2" ry="1.1"/></g><path d="M12 31c4 5 6-2 10 3s6-3 10 2 6-3 10 2 6-3 10 2 6-2 8-3v-3H12z" fill="#6bbf59"/><path d="M14 34h52l-6 6H20z" fill="#ffc83d"/><rect x="13" y="38" width="54" height="8" rx="4" fill="#c7822e" stroke="${OUT}" stroke-width="1.2"/><path d="M14 47h52c0 6-5 8-10 8H24c-5 0-10-2-10-8z" fill="#e8a23d" stroke="${OUT}" stroke-width="1.5"/>`);
+    if(/sandwich/.test(n)) return sv(`<ellipse cx="40" cy="55" rx="26" ry="3" fill="rgba(0,0,0,.12)"/><path d="M10 22l30-10 30 10-4 12H14z" fill="#f2d49a" stroke="${OUT}" stroke-width="1.5"/><path d="M12 34h56v4c-6 3-8-2-14 1s-8-2-14 1-8-2-14 1-8-2-14 0z" fill="#6bbf59"/><rect x="12" y="38" width="56" height="6" rx="2" fill="#e8a23d"/><path d="M10 44h60l-4 10H14z" fill="#f2d49a" stroke="${OUT}" stroke-width="1.5"/>`);
+    if(/submarine/.test(n)) return sv(`<ellipse cx="40" cy="54" rx="30" ry="3" fill="rgba(0,0,0,.12)"/><rect x="5" y="14" width="70" height="18" rx="9" fill="#e8a23d" stroke="${OUT}" stroke-width="1.5"/><g fill="#fff4cf"><ellipse cx="20" cy="20" rx="2" ry="1"/><ellipse cx="34" cy="18" rx="2" ry="1"/><ellipse cx="48" cy="20" rx="2" ry="1"/><ellipse cx="62" cy="18" rx="2" ry="1"/></g><path d="M7 32c6 5 8-3 14 2s8-4 14 1 8-4 14 1 8-4 14 0 6-1 8-2v-3H7z" fill="#6bbf59"/><rect x="8" y="34" width="64" height="6" rx="3" fill="#c7822e"/><path d="M6 41h68v3c0 8-6 10-12 10H18c-6 0-12-2-12-10z" fill="#e8a23d" stroke="${OUT}" stroke-width="1.5"/>`);
+    if(/shawarma/.test(n)) return sv(`<ellipse cx="40" cy="56" rx="18" ry="3" fill="rgba(0,0,0,.12)"/><path d="M28 18h24l-5 38H33z" fill="#f6e2b6" stroke="${OUT}" stroke-width="1.5"/><path d="M27 20c-3-12 8-16 13-14s14 2 13 14z" fill="#f6e2b6" stroke="${OUT}" stroke-width="1.5"/><path d="M30 12c2-5 6-6 10-5s8 0 10 5c-4 3-6 0-10 2s-7 0-10-2z" fill="#6bbf59"/><circle cx="36" cy="10" r="2.6" fill="#c7822e"/><circle cx="45" cy="9" r="2.6" fill="#c7822e"/><path d="M33 42h14l-1.2 14H34.2z" fill="#ff5d5d"/><path d="M34 46h12M33.6 50h12.8" stroke="#fff" stroke-width="2"/>`);
+    if(/hot dog/.test(n)) return sv(`<ellipse cx="40" cy="52" rx="30" ry="3" fill="rgba(0,0,0,.12)"/><rect x="6" y="26" width="68" height="22" rx="11" fill="#e8a23d" stroke="${OUT}" stroke-width="1.5"/><rect x="2" y="23" width="76" height="12" rx="6" fill="#d9442f"/><path d="M8 26c6-5 10 4 16-1s10 4 16-1 10 4 16-1 10 4 16 0" stroke="#ffc83d" stroke-width="3.4" fill="none" stroke-linecap="round"/><path d="M10 46c0-4 6-6 12-6" stroke="rgba(255,255,255,.5)" stroke-width="2" fill="none" stroke-linecap="round"/>`);
+    return sv(`<ellipse cx="40" cy="54" rx="22" ry="3" fill="rgba(0,0,0,.12)"/><g transform="rotate(-28 40 30)"><rect x="46" y="22" width="26" height="6" rx="3" fill="#fff4e0" stroke="${OUT}" stroke-width="1.3"/><circle cx="73" cy="22" r="4" fill="#fff4e0" stroke="${OUT}" stroke-width="1.3"/><circle cx="73" cy="29" r="4" fill="#fff4e0" stroke="${OUT}" stroke-width="1.3"/><path d="M8 26c0-12 14-16 28-14s16 10 14 20-14 16-28 14S8 38 8 26z" fill="#d98a2b" stroke="${OUT}" stroke-width="1.5"/><circle cx="22" cy="22" r="2" fill="#f2b95a"/><circle cx="32" cy="32" r="2" fill="#f2b95a"/><circle cx="40" cy="20" r="2" fill="#f2b95a"/></g>`);
+  case 'rice': {
+    let body='#ffffff', fill='#e3b04b', ex=SPECK(specks);
+    if(/nasi/.test(n)){fill='#c9732b';ex=SPECK(specks)+'<ellipse cx="42" cy="13" rx="12" ry="5" fill="#fff"/><circle cx="42" cy="12.5" r="3.6" fill="#ffb81c"/>'}
+    else if(/mongolian/.test(n)){fill='#6b3a1d';ex=SPECK([prot,'#ff4d2e','#6bbf59'])}
+    else if(/garlic/.test(n)){fill='#f4e5a8';ex=SPECK([prot,'#fffdf0','#fffdf0'])}
+    else if(/bbq/.test(n)){fill='#b5542a';ex=SPECK(['#e8a23d','#6bbf59','#f6d9a0'])}
+    else if(/crispy/.test(n)){ex=SPECK(specks)+'<rect x="30" y="8" width="20" height="9" rx="4" fill="#d98a2b" stroke="'+OUT+'" stroke-width="1.2"/>'}
+    if(/seafood|mix/.test(n)) ex+='<path d="M52 10c6 0 8 6 3 9-2-4-6-3-3-9z" fill="#ff8a6b" stroke="#c0503a" stroke-width="1"/>';
+    return sv(bowl(fill,body,ex).replace(STEAM,'')+'');
+  }
+  case 'kotthu': {
+    let base='#e9c27a', topping='';
+    const chunks=[[22,30,-20],[32,24,15],[42,31,-10],[52,25,25],[60,31,-30],[28,36,10],[46,37,-15],[37,19,30]]
+      .map((p,i)=>`<rect x="${p[0]}" y="${p[1]-9}" width="13" height="5" rx="2.5" fill="${i%3?'#d9a85a':'#f0d29a'}" stroke="${OUT}" stroke-width=".8" transform="rotate(${p[2]} ${p[0]+6} ${p[1]-6})"/>`).join('');
+    const bits=[[26,22],[36,28],[50,22],[58,30],[44,16],[32,34]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.3" fill="${i%2?'#6bbf59':prot}"/>`).join('');
+    if(/dolphin/.test(n)) return sv(`<ellipse cx="40" cy="54" rx="28" ry="3" fill="rgba(0,0,0,.12)"/><path d="M8 40c0-18 14-28 32-28s32 10 32 28z" fill="#e6b560" stroke="${OUT}" stroke-width="1.6"/><path d="M12 38c4-14 14-20 28-20" stroke="rgba(255,255,255,.55)" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M14 40h52v6c0 5-4 7-8 7H22c-4 0-8-2-8-7z" fill="${prot}" stroke="${OUT}" stroke-width="1.4"/><circle cx="30" cy="48" r="2.4" fill="#6bbf59"/><circle cx="44" cy="49" r="2.4" fill="#ff8a6b"/><circle cx="56" cy="47" r="2.4" fill="#6bbf59"/>`);
+    if(/cheese/.test(n)) topping='<path d="M20 28c6 8 10-2 16 6s10-6 16 2 6-4 10 2l-4 8H22z" fill="#ffc83d" opacity=".9"/>';
+    if(/creamy/.test(n)) topping='<path d="M22 28c8 8 12-4 20 4s12-6 18 2-2 10-10 10H26z" fill="#fffaf0" opacity=".95"/>';
+    if(/string/.test(n)){base='#fff4e0';return sv(`<ellipse cx="40" cy="54" rx="28" ry="3" fill="rgba(0,0,0,.12)"/><ellipse cx="40" cy="38" rx="30" ry="14" fill="#fffaf0" stroke="${OUT}" stroke-width="1.6"/><g fill="none" stroke="#e9c27a" stroke-width="2.4" stroke-linecap="round"><circle cx="26" cy="36" r="6"/><circle cx="40" cy="32" r="6"/><circle cx="54" cy="36" r="6"/><circle cx="33" cy="42" r="5"/><circle cx="47" cy="42" r="5"/></g>${bits}`)}
+    return sv(`<ellipse cx="40" cy="54" rx="28" ry="3" fill="rgba(0,0,0,.12)"/><ellipse cx="40" cy="38" rx="30" ry="15" fill="#fffaf0" stroke="${OUT}" stroke-width="1.6"/><g>${chunks}</g>${topping}${bits}`);
+  }
+  case 'noodles':
+    if(/pasta/.test(n)){const sauce=/milky/.test(n)?'#fff1c9':'#e0553a';
+      return sv(`<ellipse cx="40" cy="54" rx="28" ry="3" fill="rgba(0,0,0,.12)"/><ellipse cx="40" cy="40" rx="32" ry="14" fill="#fff" stroke="${OUT}" stroke-width="1.6"/><ellipse cx="40" cy="38" rx="22" ry="9" fill="${sauce}"/><g fill="none" stroke="#f0cc72" stroke-width="2.6" stroke-linecap="round"><path d="M24 38c4-8 10-8 16 0s12 8 16 0"/><path d="M26 42c6-6 10-6 14 0s10 6 14-1"/><path d="M30 34c4-5 8-5 12-1"/></g><circle cx="46" cy="30" r="2.6" fill="#6bbf59"/><circle cx="32" cy="32" r="2.2" fill="#ff5d5d"/><g transform="translate(60 14) rotate(25)"><path d="M0 0v22" stroke="#b9b9b9" stroke-width="2" stroke-linecap="round"/><path d="M-3 0v6M3 0v6" stroke="#b9b9b9" stroke-width="1.5"/></g>`)}
+    return sv(`<ellipse cx="40" cy="54" rx="26" ry="3.5" fill="rgba(0,0,0,.12)"/><path d="M10 30h60c0 14-11 24-30 24S10 44 10 30z" fill="#fff" stroke="${OUT}" stroke-width="1.6"/><g fill="none" stroke="#f0c44f" stroke-width="2.6" stroke-linecap="round"><path d="M14 30c4-10 8-10 12 0s8 10 12 0 8-10 12 0 8 10 12 0"/><path d="M16 28c4-9 8-9 12 0s8 9 12 0 8-9 12 0"/></g><circle cx="30" cy="22" r="2.6" fill="${prot}" stroke="${OUT}" stroke-width=".8"/><circle cx="44" cy="20" r="2.6" fill="#6bbf59"/><circle cx="54" cy="24" r="2.6" fill="#ff8a6b"/><path d="M52 4l14 22M58 3l14 20" stroke="#b9774a" stroke-width="2.4" stroke-linecap="round"/>`);
+  case 'chai': return sv(cup(c));
+  case 'coffee': return sv(cup(c));
+  case 'hot': return sv(cup(c));
+  case 'juice': return sv(STRAW+glass(c,`<circle cx="55" cy="12" r="7" fill="${c}" stroke="#fff" stroke-width="2"/><circle cx="55" cy="12" r="3" fill="rgba(255,255,255,.55)"/>`,ICE));
+  case 'shakes': return sv(glass(c,`<path d="M28 10c0-9 8-8 12-6 6-4 12-2 12 6z" fill="#fffaf0" stroke="${OUT}" stroke-width="1.2"/><circle cx="40" cy="4" r="3" fill="#e0243a"/>`,'')+STRAW);
+  case 'mojito': return sv(STRAW+glass(c,`<g fill="#3fb25b" stroke="#2a8a44" stroke-width=".8"><ellipse cx="32" cy="9" rx="6" ry="3" transform="rotate(-30 32 9)"/><ellipse cx="42" cy="6" rx="6" ry="3" transform="rotate(20 42 6)"/><ellipse cx="50" cy="10" rx="5" ry="2.6" transform="rotate(-10 50 10)"/></g><circle cx="26" cy="14" r="6" fill="#b6e36b" stroke="#fff" stroke-width="1.6"/>`,ICE+'<circle cx="36" cy="40" r="3" fill="rgba(255,255,255,.5)"/><circle cx="44" cy="46" r="2.4" fill="rgba(255,255,255,.5)"/>'));
+  case 'floats': {
+    if(/boba/.test(n)) return sv(glass(c,'',[[34,50],[40,52],[46,50],[37,46],[43,47],[49,46],[32,46]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="2.6" fill="#2b1a12"/>`).join(''))+'<path d="M48 2L43 40" stroke="#ff9ec7" stroke-width="4.4" stroke-linecap="round"/>');
+    if(/lassi/.test(n)) return sv(glass(c,`<path d="M28 10c0-4 24-4 24 0z" fill="#fffaf0"/><circle cx="36" cy="8" r="1.4" fill="#e0a64a"/><circle cx="44" cy="8" r="1.4" fill="#e0a64a"/>`,'<path d="M30 22h20" stroke="rgba(255,255,255,.6)" stroke-width="2"/>')+STRAW);
+    return sv(STRAW+glass(c,`<circle cx="40" cy="8" r="9" fill="#fffaf0" stroke="${OUT}" stroke-width="1.3"/><path d="M34 6c2-3 6-3 8-1" stroke="#f0e2c0" stroke-width="2" fill="none" stroke-linecap="round"/>`,ICE));
+  }
+  case 'cold': 
+    if(/faluda/.test(n)) return sv(STRAW+glass(c,`<circle cx="40" cy="8" r="8" fill="#fffaf0" stroke="${OUT}" stroke-width="1.3"/><circle cx="40" cy="4" r="2.6" fill="#e0243a"/>`,'<path d="M31 38h18M32 46h16" stroke="#fffaf0" stroke-width="3" stroke-linecap="round"/>'));
+    return sv(STRAW+glass(c,'',ICE));
+  }
+  return sv(glass(c,'',ICE));
+}
+function photoURL(id){ return '/api/photo?id='+id+'&v='+DATA.photos[id]; }
+function artHTML(it){
+  if(DATA.photos && DATA.photos[it.id]) return `<div class="art photo"><img loading="lazy" decoding="async" alt="${it.name}" src="${photoURL(it.id)}"></div>`;
+  return '';
+  const c=flav(it.name);
+  return `<div class="art" style="background:linear-gradient(135deg,${c}38,${c}12)">${artFor(it)}</div>`;
+}
+
+function cardView(it){
+  const vi = sel[it.id] || 0, many = it.variants.length > 1;
+  const chips = many
+    ? it.variants.map((v,i)=>`<button type="button" class="chip" data-act="var" data-id="${it.id}" data-vi="${i}" aria-pressed="${i===vi}">${v}</button>`).join('')
+    : (it.variants[0] ? `<span class="tag">${it.variants[0]}</span>` : '');
+  const p = priceOf(it.id,vi);
+  return `<article class="item${isSold(it.id)?' sold':''}" data-id="${it.id}">
+    ${artHTML(it)}
+    <div><h3>${it.name}</h3>${it.desc?`<p class="desc">${it.desc}</p>`:''}</div>
+    <div class="item-foot"><div class="vars">${p?`<span class="price" data-price>${money(p)}</span>`:'<span data-price></span>'}${chips}</div>
+    ${isSold(it.id)?`<span class="soldtag">${t('sold')}</span>`:`<button type="button" class="add" data-act="add" data-id="${it.id}" aria-label="${t('add')}: ${it.name}">${icon('plus')}</button>`}</div></article>`;
+}
+function renderTiles(){
+  $('#tiles').innerHTML = CATS.map(c=>{
+    const n = ITEMS.filter(i=>i.cat===c.id).length;
+    return `<button type="button" class="tile" data-act="cat" data-cat="${c.id}"><span class="glyph">${icon(c.icon)}</span><span><h3 class="display">${catName(c)}</h3><small>${t('items').replace('{n}',n)}</small></span></button>`;
+  }).join('');
+}
+function renderFavs(){ $('#favs').innerHTML = FAVS.map(id=>cardView(BY[id])).join(''); }
+function renderReviews(){
+  $('#reviews').innerHTML = REVIEWS.map(r=>`<figure class="rev"><blockquote>${r.t}</blockquote><figcaption><b>${r.who}</b>Google review</figcaption></figure>`).join('');
+}
+function renderMenu(){
+  const q = query.trim().toLowerCase();
+  $('#cats').innerHTML = CATS.map(c=>`<button type="button" data-act="cat" data-cat="${c.id}">${catName(c)}</button>`).join('');
+  let html = '';
+  CATS.forEach(c=>{
+    const list = ITEMS.filter(i=>i.cat===c.id && (!q || i.name.toLowerCase().includes(q) || catName(c).toLowerCase().includes(q)));
+    if(!list.length) return;
+    html += `<section class="cat" id="cat-${c.id}"><h2 class="display">${catName(c)}<small>${t('items').replace('{n}',list.length)}</small></h2><div class="grid">${list.map(cardHTML).join('')}</div></section>`;
+  });
+  $('#menuList').innerHTML = html || `<p class="empty">${t('no_results')}</p>`;
+}
+function scrollCat(id){
+  const el = document.getElementById('cat-'+id); if(!el) return;
+  el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth', block:'start'});
+}
+
+/* ---------- Cart ---------- */
+const count = () => cart.reduce((a,c)=>a+c.q,0);
+function lineLabel(c){ const it=BY[c.id], v=it.variants[c.vi]; return it.name + (v?` (${v})`:''); }
+function total(){
+  let sum = 0;
+  for(const c of cart){ const p = priceOf(c.id,c.vi); if(!p) return null; sum += p*c.q; }
+  return cart.length ? sum : null;
+}
+function saveCart(){ store.set('sh-cart', JSON.stringify(cart)); }
+function addToCart(id){
+  if(isSold(id)) return;
+  const vi = sel[id] || 0, f = cart.find(c=>c.id===id && c.vi===vi);
+  if(f) f.q++; else cart.push({id,vi,q:1});
+  saveCart(); renderCart(); toast(t('added'));
+}
+function waText(){
+  const L = [t('wa_hello'),''];
+  cart.forEach(c=>L.push(`- ${c.q} x ${lineLabel(c)}`));
+  L.push('', 'Order type: ' + (orderType==='dine' ? 'Dine in' : 'Take away'));
+  if(custName.trim()) L.push('Name: ' + custName.trim());
+  if(custNote.trim()) L.push('Note: ' + custNote.trim());
+  const tt = total(); if(tt) L.push('Total: ' + money(tt));
+  return L.join('\n');
+}
+function waLink(text){ return `https://wa.me/${WA}?text=${encodeURIComponent(text)}`; }
+function renderCart(){
+  const n = count();
+  $('#cartCount').textContent = n; $('#cartCount').hidden = !n;
+  const bar = $('#cartbar');
+  bar.hidden = !n || $('#drawer').classList.contains('open');
+  const tt = total();
+  $('#cartbarTxt').textContent = `${t('view_order')} · ${t('n_items').replace('{n}',n)}` + (tt?` · ${money(tt)}`:'');
+  const body = $('#dBody'), foot = $('#dFoot');
+  if(!n){
+    body.innerHTML = `<p class="note" style="padding-top:20px">${t('cart_empty')}</p>`;
+    foot.hidden = true; return;
+  }
+  foot.hidden = false;
+  const keepFocus = document.activeElement && document.activeElement.id;
+  body.innerHTML = cart.map((c,i)=>{
+    const p = priceOf(c.id,c.vi);
+    return `<div class="line"><div><b>${BY[c.id].name}</b><small>${BY[c.id].variants[c.vi]||''}${p?(BY[c.id].variants[c.vi]?' · ':'')+money(p*c.q):''}</small></div>
+      <div class="qty"><button type="button" data-act="dec" data-i="${i}" aria-label="-">${icon('minus')}</button><span>${c.q}</span><button type="button" data-act="inc" data-i="${i}" aria-label="+">${icon('plus')}</button></div></div>`;
+  }).join('') + `
+    <fieldset class="field"><legend>${t('order_type')}</legend><div class="opts">
+      <label class="opt"><input type="radio" name="otype" value="dine" ${orderType==='dine'?'checked':''}>${t('dine')}</label>
+      <label class="opt"><input type="radio" name="otype" value="take" ${orderType==='take'?'checked':''}>${t('take')}</label></div></fieldset>
+    <div class="field"><label for="cName">${t('name')}</label><input class="input" id="cName" autocomplete="name" value="${custName.replace(/"/g,'&quot;')}"></div>
+    <div class="field"><label for="cNote">${t('note_l')}</label><textarea class="input" id="cNote">${custNote.replace(/</g,'&lt;')}</textarea></div>
+    <fieldset class="field"><legend>${t('payment')}</legend><div class="opts">
+      <label class="opt"><input type="radio" name="pay" checked>${t('pay_counter')}</label>
+      <label class="opt off" aria-disabled="true"><input type="radio" name="pay" disabled>${t('pay_card')}<span class="soon">${t('soon')}</span><small>${t('pay_card_note')}</small></label></div></fieldset>
+    <p style="margin:18px 0 0"><button type="button" class="link" data-act="clear" style="background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;font:inherit;font-weight:600;color:var(--muted)">${t('clear')}</button></p>`;
+  if(keepFocus && document.getElementById(keepFocus) && /^c(Name|Note)$/.test(keepFocus)){ /* inputs are re-created only on qty change */ }
+  $('#totalRow').innerHTML = tt ? `<span>${t('total')}</span><span>${money(tt)}</span>` : '';
+  $('#totalNote').textContent = tt ? '' : t('total_note');
+  $('#sendWa').href = waLink(waText());
+}
+
+/* ---------- Drawer, toast ---------- */
+let lastFocus = null, toastTimer;
+function openDrawer(){
+  lastFocus = document.activeElement;
+  const d = $('#drawer'); d.classList.add('open'); d.removeAttribute('inert'); d.setAttribute('aria-hidden','false');
+  $('#scrim').classList.add('open'); $('#cartbar').hidden = true; $('#dClose').focus();
+}
+function closeDrawer(){
+  const d = $('#drawer'); d.classList.remove('open'); d.setAttribute('inert',''); d.setAttribute('aria-hidden','true');
+  $('#scrim').classList.remove('open'); renderCart(); if(lastFocus && lastFocus.focus) lastFocus.focus();
+}
+function toast(msg){
+  const el = $('#toast'); el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(()=>el.classList.remove('show'), 1600);
+}
+
+/* ---------- Language, theme, routes ---------- */
+function applyLang(){
+  document.documentElement.lang = lang;
+  $$('[data-i18n]').forEach(e=>{ e.textContent = t(e.dataset.i18n); });
+  $$('[data-i18n-ph]').forEach(e=>{ e.placeholder = t(e.dataset.i18nPh); });
+  $$('[data-i18n-aria]').forEach(e=>{ e.setAttribute('aria-label', t(e.dataset.i18nAria)); });
+  $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===lang));
+  renderTiles(); renderFavs(); renderReviews(); renderMenu(); renderCart(); showNotice(); showHours(); syncFields(); measure();
+}
+function measure(){ document.documentElement.style.setProperty('--hdr', $('#hdr').offsetHeight + 'px'); }
+const ROUTES = ['home','menu','story','visit','admin'];
+function route(){
+  let r = location.hash.slice(1); if(!ROUTES.includes(r)) r = 'home';
+  ROUTES.forEach(x=>{ $('#v-'+x).hidden = x!==r; });
+  $$('[data-route]').forEach(a=>{ if(a.dataset.route===r) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  window.scrollTo(0,0); measure();
+}
+function setTheme(mode){ document.documentElement.setAttribute('data-theme', mode); store.set('sh-theme', mode); }
+
+/* ---------- Events ---------- */
+document.addEventListener('click', e=>{
+  const el = e.target.closest('[data-act],[data-lang]'); if(!el) return;
+  if(el.dataset.lang){ lang = el.dataset.lang; store.set('sh-lang', lang); applyLang(); return; }
+  const a = el.dataset.act, id = el.dataset.id;
+  if(a==='add') addToCart(id);
+  else if(a==='var'){
+    sel[id] = +el.dataset.vi;
+    $$(`.item[data-id="${id}"]`).forEach(card=>{
+      card.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed', +c.dataset.vi===sel[id]));
+      const p = priceOf(id, sel[id]); card.querySelector('[data-price]').textContent = p ? money(p) : '';
+    });
+  }
+  else if(a==='inc'){ cart[+el.dataset.i].q++; saveCart(); renderCart(); }
+  else if(a==='dec'){ const c = cart[+el.dataset.i]; c.q--; if(c.q<=0) cart.splice(+el.dataset.i,1); saveCart(); renderCart(); }
+  else if(a==='clear'){ cart = []; saveCart(); renderCart(); }
+  else if(a==='cat'){
+    if(location.hash.slice(1)!=='menu'){ location.hash = 'menu'; setTimeout(()=>scrollCat(el.dataset.cat), 60); }
+    else scrollCat(el.dataset.cat);
+  }
+});
+document.addEventListener('input', e=>{
+  if(e.target.classList.contains('pe')){ const k=e.target.dataset.key, v=parseInt(e.target.value,10); if(v>0) DATA.prices[k]=v; else delete DATA.prices[k]; markDirty(); return; }
+  if(e.target.dataset.f){ const [g,l]=e.target.dataset.f.split('.'); DATA[g][l]=e.target.value; markDirty(); showNotice(); showHours(); return; }
+  if(e.target.id==='cName'){ custName = e.target.value; $('#sendWa').href = waLink(waText()); $('#err').textContent=''; }
+  else if(e.target.id==='cNote'){ custNote = e.target.value; $('#sendWa').href = waLink(waText()); }
+  else if(e.target.id==='search'){ query = e.target.value; renderMenu(); }
+});
+document.addEventListener('change', e=>{
+  if(e.target.classList.contains('so')){ const id=e.target.dataset.id, s=DATA.soldOut, i=s.indexOf(id); if(e.target.checked && i<0) s.push(id); if(!e.target.checked && i>=0) s.splice(i,1); markDirty(); return; }
+  if(e.target.name==='otype'){ orderType = e.target.value; $('#sendWa').href = waLink(waText()); }
+});
+$('#sendWa').addEventListener('click', e=>{
+  if(!cart.length){ e.preventDefault(); return; }
+  if(!custName.trim()){ e.preventDefault(); $('#err').textContent = t('name_needed'); const f=$('#cName'); if(f) f.focus(); }
+});
+$('#cartBtn').addEventListener('click', openDrawer);
+$('#cartbar').addEventListener('click', openDrawer);
+$('#dClose').addEventListener('click', closeDrawer);
+$('#scrim').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && $('#drawer').classList.contains('open')) closeDrawer(); });
+$('#themeBtn').addEventListener('click', ()=>{
+  const cur = document.documentElement.getAttribute('data-theme');
+  const dark = cur ? cur==='dark' : !matchMedia('(prefers-color-scheme:light)').matches;
+  setTheme(dark ? 'light' : 'dark');
+});
+$('#copyPhone').addEventListener('click', ()=>{
+  const done = ()=>toast(t('copied'));
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(PHONE).then(done, ()=>selectPhone()); } else selectPhone();
+  function selectPhone(){ const r=document.createRange(); r.selectNodeContents($('#phoneTxt')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); }
+});
+window.addEventListener('hashchange', route);
+window.addEventListener('resize', measure);
+
+/* ---------- Boot ---------- */
+(function(){
+  const th = store.get('sh-theme'); if(th==='dark'||th==='light') setTheme(th);
+  const hello = waLink(T.en.wa_hello);
+  $('#waHero').href = hello; $('#waVisit').href = hello;
+  $('#mapBtn').href = MAPS; $('#allReviews').href = MAPS; $('#igBtn').href = IG;
+  applyLang(); route();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+})();
+
+/* ---------- Shop data and admin (Google sign-in, saved to Vercel Blob) ---------- */
+let idToken = null, gsiReady = false;
+function shrink(file){
+  return new Promise((ok,bad)=>{
+    const img=new Image(), u=URL.createObjectURL(file);
+    img.onload=()=>{ const M=900, k=Math.min(1,M/Math.max(img.width,img.height)), c=document.createElement('canvas');
+      c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(u); ok(c.toDataURL('image/jpeg',0.8)); };
+    img.onerror=()=>{ URL.revokeObjectURL(u); bad(new Error('Could not read this photo')); };
+    img.src=u;
+  });
+}
+async function uploadPhoto(input){
+  const id=input.dataset.id, file=input.files && input.files[0], box=input.closest('.cam'), msg=$('#aMsg'); if(!file) return;
+  box.classList.add('busy'); msg.textContent='Uploading photo...';
+  try{
+    const image = await shrink(file);
+    const r = await fetch('/api/photo?id='+id, {method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer '+idToken}, body:JSON.stringify({image})});
+    if(!r.ok){ const j = await r.json().catch(()=>({})); msg.textContent = r.status===401 ? 'Sign-in expired. Sign out and sign in again.' : 'Photo failed: '+(j.error||('HTTP '+r.status)); return; }
+    DATA.photos[id] = Date.now();
+    renderMenu();
+    await saveData();
+  }catch(e){ msg.textContent = 'Photo failed: '+e.message; }
+  finally{ box.classList.remove('busy'); }
+}
+document.addEventListener('change', e=>{ if(e.target.classList && e.target.classList.contains('ph')) uploadPhoto(e.target); });
+document.addEventListener('click', async e=>{
+  const b = e.target.closest && e.target.closest('.phx'); if(!b) return;
+  delete DATA.photos[b.dataset.id]; renderMenu(); await saveData();
+});
+function markDirty(){ dirty = true; $('#aMsg').textContent = 'Unsaved changes. Press Save changes.'; }
+function showNotice(){ const n = $('#notice'); const txt = (DATA.notice[lang] || DATA.notice.en || '').trim(); n.textContent = txt; n.hidden = !txt; measure(); }
+function showHours(){ const h = (DATA.hours[lang] || DATA.hours.en || '').trim(); const el = document.querySelector('[data-i18n="hours_v"]'); if(el) el.textContent = h || t('hours_v'); }
+function syncFields(){ $$('[data-f]').forEach(i=>{ const [g,l] = i.dataset.f.split('.'); i.value = DATA[g][l] || ''; }); }
+function normalize(d){ return {photos:d.photos||{}, prices:d.prices||{}, soldOut:d.soldOut||[], hours:Object.assign({en:'',si:'',ta:''}, d.hours), notice:Object.assign({en:'',si:'',ta:''}, d.notice)}; }
+function applyData(){ cart = cart.filter(c=>!isSold(c.id)); saveCart(); renderFavs(); renderMenu(); renderCart(); showNotice(); showHours(); syncFields(); }
+async function loadData(){
+  /* The saved copy comes from the API. shop-data.json in the project is the starting copy until the first save. */
+  for(const url of ['/api/shop-data','shop-data.json']){
+    try{
+      const r = await fetch(url, {cache:'no-store'}); if(!r.ok) continue;
+      DATA = normalize(await r.json()); applyData(); return;
+    }catch(e){}
+  }
+}
+function setEdit(on){
+  editMode = on && isAdmin; $('#asheet').hidden = !editMode; $('#adminPill').hidden = !isAdmin || editMode; document.body.classList.toggle('editing', editMode); measure();
+  syncFields(); renderMenu(); renderFavs();
+}
+async function checkAdmin(tok){
+  try{
+    const r = await fetch('/api/me', {headers:{Authorization:'Bearer ' + tok}, cache:'no-store'});
+    if(!r.ok) return null;
+    const j = await r.json(); return j.admin ? j : null;
+  }catch(e){ return null; }
+}
+async function onCredential(resp){
+  const st = $('#adminStatus'); st.textContent = 'Checking your account...';
+  const j = await checkAdmin(resp.credential);
+  if(!j){ st.textContent = 'This Google account is not on the admin list.'; return; }
+  idToken = resp.credential; isAdmin = true;
+  try{ sessionStorage.setItem('sh-admin-token', idToken); }catch(e){}
+  st.textContent = 'Signed in as ' + j.email + '.';
+  location.hash = 'menu'; setEdit(true);
+}
+function loadGsi(){
+  return new Promise(res=>{
+    if(window.google && google.accounts) return res();
+    const s = document.createElement('script'); s.src = 'https://accounts.google.com/gsi/client'; s.async = true;
+    s.onload = ()=>res(); s.onerror = ()=>res(); document.head.appendChild(s);
+  });
+}
+async function initAdminView(){
+  if(location.hash.slice(1) !== 'admin') return;
+  const st = $('#adminStatus');
+  if(isAdmin){ st.textContent = 'You are signed in. Open the Menu page to edit.'; return; }
+  let cfg = null;
+  try{ cfg = await (await fetch('/api/config', {cache:'no-store'})).json(); }catch(e){}
+  if(!cfg || !cfg.clientId){ st.textContent = 'Admin sign-in is not set up yet. Add GOOGLE_CLIENT_ID in Vercel and redeploy.'; return; }
+  await loadGsi();
+  if(!(window.google && google.accounts)){ st.textContent = 'Could not load Google sign-in. Check your connection and refresh.'; return; }
+  if(!gsiReady){
+    google.accounts.id.initialize({client_id: cfg.clientId, callback: onCredential});
+    google.accounts.id.renderButton($('#gsiBtn'), {theme:'outline', size:'large', text:'signin_with', shape:'pill'});
+    gsiReady = true;
+  }
+  st.textContent = '';
+}
+async function saveData(){
+  const btn = $('#aSave'), msg = $('#aMsg'); btn.disabled = true; msg.textContent = 'Saving...';
+  try{
+    const r = await fetch('/api/save', {method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer ' + idToken}, body: JSON.stringify(DATA)});
+    if(r.status === 401){ msg.textContent = 'Your sign-in expired or is not allowed. Sign out, then sign in again at /#admin.'; return; }
+    if(!r.ok){ const txt = await r.text().catch(()=>''); let j = {}; try{ j = JSON.parse(txt); }catch(e){} msg.textContent = 'Could not save (HTTP ' + r.status + ')' + (j.error ? ': ' + j.error : txt ? ': ' + txt.replace(/\s+/g,' ').slice(0,140) : '.'); return; }
+    dirty = false; msg.textContent = 'Saved. Customers see the update within about a minute.';
+  }catch(e){ msg.textContent = 'Could not reach the server. Try again.'; }
+  finally{ btn.disabled = false; }
+}
+function signOut(){
+  idToken = null; isAdmin = false;
+  try{ sessionStorage.removeItem('sh-admin-token'); }catch(e){}
+  try{ if(window.google && google.accounts) google.accounts.id.disableAutoSelect(); }catch(e){}
+  setEdit(false); $('#adminPill').hidden = true;
+}
+$('#adminPill').addEventListener('click', ()=>setEdit(true));
+$('#aExit').addEventListener('click', ()=>setEdit(false));
+$('#aOut').addEventListener('click', signOut);
+$('#aSave').addEventListener('click', saveData);
+window.addEventListener('hashchange', initAdminView);
+loadData();
+(async function(){
+  let tok = null; try{ tok = sessionStorage.getItem('sh-admin-token'); }catch(e){}
+  if(tok){
+    if(await checkAdmin(tok)){ idToken = tok; isAdmin = true; $('#adminPill').hidden = false; }
+    else{ try{ sessionStorage.removeItem('sh-admin-token'); }catch(e){} }
+  }
+  initAdminView();
+})();
+</script>
+
+</body>
+</html>
