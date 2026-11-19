@@ -132,6 +132,7 @@ html:not([lang="en"]) .hero h1{font-size:clamp(2rem,5vw,3.6rem)}
 .cam img{width:100%;height:100%;object-fit:cover}
 .cam input{display:none}
 .cam.busy{opacity:.5}
+.phx{border:1px solid var(--line);background:var(--surface-2);color:var(--fg);border-radius:6px;font:inherit;font-size:.7rem;padding:3px 7px;cursor:pointer}
 .item h3{margin:0;font-size:1.05rem;font-weight:600;line-height:1.35}
 .item .desc{margin:6px 0 0;color:var(--muted);font-size:.9rem}
 .item-foot{display:flex;align-items:center;gap:10px;justify-content:space-between}
@@ -745,7 +746,8 @@ function cardEdit(it){
   const rows = it.variants.map((v,i)=>`<label>${v||'Rs'}<input class="pe" type="number" min="0" step="10" inputmode="numeric" data-key="${it.id}|${i}" value="${priceOf(it.id,i)||''}" placeholder="Rs" aria-label="${it.name} ${v||'price'}"></label>`).join('');
   const has = DATA.photos && DATA.photos[it.id];
   const cam = `<label class="cam" title="Photo">${has?`<img alt="" src="${photoURL(it.id)}">`:'Photo'}<input type="file" accept="image/*" class="ph" data-id="${it.id}"></label>`;
-  return `<article class="item edit" data-id="${it.id}">${cam}<h3>${it.name}</h3><div class="edit-row">${rows}<label class="sold"><input type="checkbox" class="so" data-id="${it.id}" ${isSold(it.id)?'checked':''}>Sold out</label></div></article>`;
+  const del = has ? `<button type="button" class="phx" data-id="${it.id}" aria-label="Remove photo">Remove photo</button>` : '';
+  return `<article class="item edit" data-id="${it.id}">${cam}<h3>${it.name}</h3><div class="edit-row">${rows}${del}<label class="sold"><input type="checkbox" class="so" data-id="${it.id}" ${isSold(it.id)?'checked':''}>Sold out</label></div></article>`;
 }
 /* ---------- Drawn food and drink illustrations (no photos needed) ---------- */
 const OUT='rgba(110,85,60,.55)';
@@ -1060,12 +1062,16 @@ async function uploadPhoto(input){
     const r = await fetch('/api/photo?id='+id, {method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer '+idToken}, body:JSON.stringify({image})});
     if(!r.ok){ const j = await r.json().catch(()=>({})); msg.textContent = r.status===401 ? 'Sign-in expired. Sign out and sign in again.' : 'Photo failed: '+(j.error||('HTTP '+r.status)); return; }
     DATA.photos[id] = Date.now();
-    box.innerHTML = '<img alt="" src="'+photoURL(id)+'"><input type="file" accept="image/*" class="ph" data-id="'+id+'">';
+    renderMenu();
     await saveData();
   }catch(e){ msg.textContent = 'Photo failed: '+e.message; }
   finally{ box.classList.remove('busy'); }
 }
 document.addEventListener('change', e=>{ if(e.target.classList && e.target.classList.contains('ph')) uploadPhoto(e.target); });
+document.addEventListener('click', async e=>{
+  const b = e.target.closest && e.target.closest('.phx'); if(!b) return;
+  delete DATA.photos[b.dataset.id]; renderMenu(); await saveData();
+});
 function markDirty(){ dirty = true; $('#aMsg').textContent = 'Unsaved changes. Press Save changes.'; }
 function showNotice(){ const n = $('#notice'); const txt = (DATA.notice[lang] || DATA.notice.en || '').trim(); n.textContent = txt; n.hidden = !txt; measure(); }
 function showHours(){ const h = (DATA.hours[lang] || DATA.hours.en || '').trim(); const el = document.querySelector('[data-i18n="hours_v"]'); if(el) el.textContent = h || t('hours_v'); }
