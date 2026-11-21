@@ -158,6 +158,7 @@ html:not([lang="en"]) .hero h1{font-size:clamp(2rem,5vw,3.6rem)}
 .search{flex:none;width:200px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:9px 16px;font:inherit;font-size:.9rem}
 .search::placeholder{color:var(--muted)}
 @media (max-width:700px){.menubar-in{flex-direction:column;align-items:stretch}.search{width:100%}}
+@media (min-width:701px){.menubar-in{align-items:flex-start}.cats{flex-wrap:wrap;overflow:visible}.search{flex:0 0 auto}}
 .cat{padding-top:44px;scroll-margin-top:calc(var(--hdr) + 130px + env(safe-area-inset-top,0px))}
 .cat h2{font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:18px;display:flex;align-items:baseline;gap:12px}
 .cat h2 small{font-family:var(--font-body);font-size:.85rem;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0}
@@ -251,6 +252,13 @@ textarea.input{resize:vertical;min-height:64px}
 .asheet-in{max-width:1180px;margin:0 auto;display:grid;gap:12px}
 .arow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .arow strong{margin-right:auto}
+.asheet .input{padding:6px 10px;font-size:.85rem}
+.asheet label{font-size:.75rem}
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.slot{display:flex;gap:10px;align-items:center;font-size:.8rem}
+.slot img{width:64px;height:48px;object-fit:cover;border-radius:6px;border:1px solid var(--line);flex:0 0 auto}
+.slot-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.slot-btns .btn{padding:5px 10px;font-size:.75rem;cursor:pointer}
 .agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
 .agrid label{display:grid;gap:4px;font-size:.82rem;color:var(--muted)}
 .amsg{font-size:.9rem;color:var(--muted);min-height:1.3em;margin:0}
@@ -379,7 +387,7 @@ html:not([lang="en"]) .hero h1{font-size:clamp(1.5rem,7vw,2.1rem)}
         </div>
       </div>
       <div class="hero-photo">
-        <img class="photo" src="img/exterior.jpg" width="720" height="464" alt="Street Hut at night, with the lit sign and fairy lights over the street-side counter">
+        <img class="photo" data-slot="site-hero" src="img/exterior.jpg" width="720" height="464" alt="Street Hut at night, with the lit sign and fairy lights over the street-side counter">
         <img class="badge" src="img/logo.jpg" width="104" height="104" alt="Street Hut, established 2020">
       </div>
     </div>
@@ -438,15 +446,15 @@ html:not([lang="en"]) .hero h1{font-size:clamp(1.5rem,7vw,2.1rem)}
         <p data-i18n="story_2">Meat is grilled over an open fire at the front.</p>
         <p data-i18n="story_3">We stay open late, until 1 AM.</p>
       </div>
-      <img src="img/interior.jpg" width="720" height="478" alt="Inside Street Hut, wooden tables in front of the hand-painted coffee wall" loading="lazy">
+      <img data-slot="site-story" src="img/interior.jpg" width="720" height="478" alt="Inside Street Hut, wooden tables in front of the hand-painted coffee wall" loading="lazy">
     </div>
     <div class="sec">
       <div class="sec-head"><div><span class="up" data-i18n="gal_eyebrow">Around the hut</span><h2 class="display" data-i18n="gal_h">Gallery</h2></div></div>
       <div class="gallery">
-        <figure><img src="img/exterior.jpg" width="720" height="464" alt="" loading="lazy"><figcaption data-i18n="cap_1">Evenings on the main road</figcaption></figure>
-        <figure><img src="img/grill.jpg" width="481" height="525" alt="" loading="lazy"><figcaption data-i18n="cap_2">The open grill</figcaption></figure>
-        <figure><img src="img/interior.jpg" width="720" height="478" alt="" loading="lazy"><figcaption data-i18n="cap_3">Inside, by the coffee wall</figcaption></figure>
-        <figure><img src="img/fire.jpg" width="440" height="535" alt="" loading="lazy"><figcaption data-i18n="cap_4">The fire out front</figcaption></figure>
+        <figure><img data-slot="site-g1" src="img/exterior.jpg" width="720" height="464" alt="" loading="lazy"><figcaption data-i18n="cap_1">Evenings on the main road</figcaption></figure>
+        <figure><img data-slot="site-g2" src="img/grill.jpg" width="481" height="525" alt="" loading="lazy"><figcaption data-i18n="cap_2">The open grill</figcaption></figure>
+        <figure><img data-slot="site-g3" src="img/interior.jpg" width="720" height="478" alt="" loading="lazy"><figcaption data-i18n="cap_3">Inside, by the coffee wall</figcaption></figure>
+        <figure><img data-slot="site-g4" src="img/fire.jpg" width="440" height="535" alt="" loading="lazy"><figcaption data-i18n="cap_4">The fire out front</figcaption></figure>
       </div>
     </div>
   </div>
@@ -469,12 +477,14 @@ html:not([lang="en"]) .hero h1{font-size:clamp(1.5rem,7vw,2.1rem)}
         <h3 class="display" data-i18n="reach">Reach us</h3>
         <dl class="rows">
           <div><dt data-i18n="phone_l">Phone and WhatsApp</dt><dd id="phoneTxt">+94 77 114 4742</dd></div>
-          <div><dt>Instagram</dt><dd>@street_hut.sl</dd></div>
+          <div id="igRow"><dt>Instagram</dt><dd id="igTxt">@street_hut.sl</dd></div>
+          <span id="extraRows" style="display:contents"></span>
         </dl>
         <div class="rowbtns">
           <a class="btn btn-sun btn-sm" id="waVisit" href="#" target="_blank" rel="noopener"><svg class="ico"><use href="#i-chat"/></svg><span data-i18n="cta_wa">Order on WhatsApp</span></a>
           <button type="button" class="btn btn-line btn-sm" id="copyPhone" data-i18n="copy">Copy number</button>
           <a class="btn btn-line btn-sm" id="igBtn" href="#" target="_blank" rel="noopener">Instagram</a>
+          <span id="extraBtns" style="display:contents"></span>
         </div>
       </div>
     </div>
@@ -482,7 +492,7 @@ html:not([lang="en"]) .hero h1{font-size:clamp(1.5rem,7vw,2.1rem)}
 </section>
 <!-- ADMIN (not linked from the menu; reached at /#admin) -->
 <section class="view" id="v-admin" hidden>
-  <div class="wrap page-head"><h1 class="display">Admin</h1><p>Sign in with an approved Google account to edit prices, sold-out items, opening hours and the notice banner.</p></div>
+  <div class="wrap page-head"><h1 class="display">Admin</h1><p>Sign in with an approved Google account to edit prices, photos, opening hours, contact details and the notice banner.</p></div>
   <div class="wrap" style="padding-bottom:56px"><div id="gsiBtn"></div><p class="amsg" id="adminStatus" role="status" style="margin-top:16px"></p></div>
 </section>
 </main>
@@ -507,6 +517,24 @@ html:not([lang="en"]) .hero h1{font-size:clamp(1.5rem,7vw,2.1rem)}
         <label>Notice banner, Tamil<input class="input" data-f="notice.ta" lang="ta"></label>
       </div>
     </details>
+    <details><summary>Contact details</summary>
+      <div class="agrid" style="margin-top:12px">
+        <label>Phone number (shown on the site)<input class="input" data-f="contact.phone" inputmode="tel" placeholder="+94 77 114 4742"></label>
+        <label>WhatsApp number (digits, with 94)<input class="input" data-f="contact.whatsapp" inputmode="numeric" placeholder="94771144742"></label>
+        <label>Email<input class="input" data-f="contact.email" inputmode="email" placeholder="hello@example.com"></label>
+        <label>Instagram link<input class="input" data-f="contact.instagram" placeholder="https://www.instagram.com/street_hut.sl/"></label>
+        <label>Facebook link<input class="input" data-f="contact.facebook" placeholder="https://www.facebook.com/..."></label>
+        <label>TikTok link<input class="input" data-f="contact.tiktok" placeholder="https://www.tiktok.com/@..."></label>
+        <label>Google Maps link<input class="input" data-f="contact.maps" placeholder="https://maps.app.goo.gl/..."></label>
+        <label>Address, English<input class="input" data-f="address.en" placeholder="Hinguloya, Mawanella, towards Kandy"></label>
+        <label>Address, Sinhala<input class="input" data-f="address.si" lang="si"></label>
+        <label>Address, Tamil<input class="input" data-f="address.ta" lang="ta"></label>
+      </div>
+      <p class="amsg" style="margin-top:8px">Leave a box empty to keep the original. Press Save changes when done.</p>
+    </details>
+    <details><summary>Website photos</summary>
+      <div class="slots" id="slotList" style="margin-top:12px"></div>
+    </details>
   </div>
 </section>
 <button type="button" class="cartbar" id="cartbar" hidden><svg class="ico"><use href="#i-cart"/></svg><span id="cartbarTxt"></span></button>
@@ -525,14 +553,13 @@ html:not([lang="en"]) .hero h1{font-size:clamp(1.5rem,7vw,2.1rem)}
 
 <script>
 /* ---------- Shop details (edit here) ---------- */
-const WA = '94771144742';
-const PHONE = '+94 77 114 4742';
-const MAPS = 'https://www.google.com/maps/search/?api=1&query=7.2498324,80.4535246';
-const IG = 'https://www.instagram.com/street_hut.sl/';
+const DEF = {wa:'94771144742', phone:'+94 77 114 4742', maps:'https://www.google.com/maps/search/?api=1&query=7.2498324,80.4535246', ig:'https://www.instagram.com/street_hut.sl/'};
+let WA = DEF.wa, PHONE = DEF.phone, MAPS = DEF.maps, IG = DEF.ig;
+const SLOTS = [['site-hero','Front page main photo'],['site-story','Our Story photo'],['site-g1','Gallery photo 1'],['site-g2','Gallery photo 2'],['site-g3','Gallery photo 3'],['site-g4','Gallery photo 4']];
 /* Shop data an admin can change. The live copy is shop-data.json next to this page; these defaults apply if it cannot be loaded.
    prices: 'item-id|variant-index' -> rupees, for example 'chicken-shawarma|0': 650. An item with no price shows none;
    totals appear once every item in the order has a price. soldOut: list of item ids. */
-let DATA = {photos:{}, prices:{}, soldOut:[], hours:{en:'',si:'',ta:''}, notice:{en:'',si:'',ta:''}};
+let DATA = {contact:{}, address:{en:'',si:'',ta:''}, photos:{}, prices:{}, soldOut:[], hours:{en:'',si:'',ta:''}, notice:{en:'',si:'',ta:''}};
 let isAdmin = false, editMode = false, dirty = false;
 
 /* ---------- Menu ---------- */
@@ -966,7 +993,7 @@ function applyLang(){
   $$('[data-i18n-ph]').forEach(e=>{ e.placeholder = t(e.dataset.i18nPh); });
   $$('[data-i18n-aria]').forEach(e=>{ e.setAttribute('aria-label', t(e.dataset.i18nAria)); });
   $$('[data-lang]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.lang===lang));
-  renderTiles(); renderFavs(); renderReviews(); renderMenu(); renderCart(); showNotice(); showHours(); syncFields(); measure();
+  renderTiles(); renderFavs(); renderReviews(); renderMenu(); renderCart(); showNotice(); showHours(); showContact(); syncFields(); measure();
 }
 function measure(){ document.documentElement.style.setProperty('--hdr', $('#hdr').offsetHeight + 'px'); }
 const ROUTES = ['home','menu','story','visit','admin'];
@@ -1001,7 +1028,7 @@ document.addEventListener('click', e=>{
 });
 document.addEventListener('input', e=>{
   if(e.target.classList.contains('pe')){ const k=e.target.dataset.key, v=parseInt(e.target.value,10); if(v>0) DATA.prices[k]=v; else delete DATA.prices[k]; markDirty(); return; }
-  if(e.target.dataset.f){ const [g,l]=e.target.dataset.f.split('.'); DATA[g][l]=e.target.value; markDirty(); showNotice(); showHours(); return; }
+  if(e.target.dataset.f){ const [g,l]=e.target.dataset.f.split('.'); DATA[g][l]=e.target.value; markDirty(); showNotice(); showHours(); if(g==='contact'||g==='address') showContact(); return; }
   if(e.target.id==='cName'){ custName = e.target.value; $('#sendWa').href = waLink(waText()); $('#err').textContent=''; }
   else if(e.target.id==='cNote'){ custNote = e.target.value; $('#sendWa').href = waLink(waText()); }
   else if(e.target.id==='search'){ query = e.target.value; renderMenu(); }
@@ -1044,15 +1071,25 @@ window.addEventListener('resize', measure);
 
 /* ---------- Shop data and admin (Google sign-in, saved to Vercel Blob) ---------- */
 let idToken = null, gsiReady = false;
-function shrink(file){
+function shrink(file, max){
   return new Promise((ok,bad)=>{
     const img=new Image(), u=URL.createObjectURL(file);
-    img.onload=()=>{ const M=900, k=Math.min(1,M/Math.max(img.width,img.height)), c=document.createElement('canvas');
+    img.onload=()=>{ const M=max||900, k=Math.min(1,M/Math.max(img.width,img.height)), c=document.createElement('canvas');
       c.width=Math.round(img.width*k); c.height=Math.round(img.height*k); c.getContext('2d').drawImage(img,0,0,c.width,c.height);
       URL.revokeObjectURL(u); ok(c.toDataURL('image/jpeg',0.8)); };
     img.onerror=()=>{ URL.revokeObjectURL(u); bad(new Error('Could not read this photo')); };
     img.src=u;
   });
+}
+async function uploadSlot(input){
+  const id=input.dataset.slot, file=input.files && input.files[0], msg=$('#aMsg'); if(!file) return;
+  msg.textContent='Uploading photo...';
+  try{
+    const image = await shrink(file, 1600);
+    const r = await fetch('/api/photo?id='+id, {method:'POST', headers:{'Content-Type':'application/json', Authorization:'Bearer '+idToken}, body:JSON.stringify({image})});
+    if(!r.ok){ const j = await r.json().catch(()=>({})); msg.textContent = r.status===401 ? 'Sign-in expired. Sign out and sign in again.' : 'Photo failed: '+(j.error||('HTTP '+r.status)); return; }
+    DATA.photos[id] = Date.now(); showContact(); await saveData();
+  }catch(e){ msg.textContent = 'Photo failed: '+e.message; }
 }
 async function uploadPhoto(input){
   const id=input.dataset.id, file=input.files && input.files[0], box=input.closest('.cam'), msg=$('#aMsg'); if(!file) return;
@@ -1067,17 +1104,53 @@ async function uploadPhoto(input){
   }catch(e){ msg.textContent = 'Photo failed: '+e.message; }
   finally{ box.classList.remove('busy'); }
 }
-document.addEventListener('change', e=>{ if(e.target.classList && e.target.classList.contains('ph')) uploadPhoto(e.target); });
+document.addEventListener('change', e=>{ if(e.target.classList && e.target.classList.contains('ph')) uploadPhoto(e.target); if(e.target.classList && e.target.classList.contains('sph')) uploadSlot(e.target); });
 document.addEventListener('click', async e=>{
+  const sr = e.target.closest && e.target.closest('.sreset');
+  if(sr){ delete DATA.photos[sr.dataset.slot]; showContact(); await saveData(); return; }
   const b = e.target.closest && e.target.closest('.phx'); if(!b) return;
   delete DATA.photos[b.dataset.id]; renderMenu(); await saveData();
 });
 function markDirty(){ dirty = true; $('#aMsg').textContent = 'Unsaved changes. Press Save changes.'; }
 function showNotice(){ const n = $('#notice'); const txt = (DATA.notice[lang] || DATA.notice.en || '').trim(); n.textContent = txt; n.hidden = !txt; measure(); }
+function showSlots(){
+  $$('img[data-slot]').forEach(im=>{ if(!im.dataset.def) im.dataset.def = im.getAttribute('src'); const id=im.dataset.slot; const want = DATA.photos[id] ? photoURL(id) : im.dataset.def; if(im.getAttribute('src')!==want) im.src = want; });
+}
+function showContact(){
+  const c = DATA.contact || {};
+  PHONE = (c.phone||'').trim() || DEF.phone;
+  let wa = (c.whatsapp||'').replace(/\D/g,'');
+  if(!wa && (c.phone||'').trim()){ wa = c.phone.replace(/\D/g,''); if(wa.startsWith('0')) wa = '94'+wa.slice(1); }
+  WA = wa || DEF.wa;
+  MAPS = c.maps || DEF.maps; IG = c.instagram || DEF.ig;
+  const hello = waLink(T.en.wa_hello);
+  $('#waHero').href = hello; $('#waVisit').href = hello;
+  $('#mapBtn').href = MAPS; $('#allReviews').href = MAPS; $('#igBtn').href = IG;
+  $('#phoneTxt').textContent = PHONE;
+  const handle = u=>{ const m=/instagram\.com\/([^/?#]+)/i.exec(u); return m ? '@'+m[1] : u; };
+  $('#igTxt').textContent = handle(IG);
+  const rows = [], btns = [];
+  const esc = x=>String(x).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
+  if(c.email){ rows.push(['Email', esc(c.email)]); btns.push(`<a class="btn btn-line btn-sm" href="mailto:${esc(c.email)}">Email</a>`); }
+  if(c.facebook){ rows.push(['Facebook', esc(c.facebook.replace(/^https:\/\/(www\.)?/,''))]); btns.push(`<a class="btn btn-line btn-sm" href="${esc(c.facebook)}" target="_blank" rel="noopener">Facebook</a>`); }
+  if(c.tiktok){ rows.push(['TikTok', esc(c.tiktok.replace(/^https:\/\/(www\.)?/,''))]); btns.push(`<a class="btn btn-line btn-sm" href="${esc(c.tiktok)}" target="_blank" rel="noopener">TikTok</a>`); }
+  $('#extraRows').innerHTML = rows.map(r=>`<div><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`).join('');
+  $('#extraBtns').innerHTML = btns.join('');
+  const a = (DATA.address[lang] || DATA.address.en || '').trim(); const el = document.querySelector('[data-i18n="addr_v"]'); if(el) el.textContent = a || t('addr_v');
+  showSlots(); renderSlots();
+}
+function renderSlots(){
+  const box = $('#slotList'); if(!box) return;
+  box.innerHTML = SLOTS.map(([id,label])=>{
+    const has = !!DATA.photos[id], im = document.querySelector('img[data-slot="'+id+'"]');
+    const src = has ? photoURL(id) : (im ? (im.dataset.def||im.getAttribute('src')) : '');
+    return `<div class="slot"><img alt="" src="${src}"><div><b>${label}</b><div class="slot-btns"><label class="btn btn-line btn-sm">Change photo<input type="file" accept="image/*" class="sph" data-slot="${id}" hidden></label>${has?`<button type="button" class="btn btn-line btn-sm sreset" data-slot="${id}">Use original</button>`:''}</div></div></div>`;
+  }).join('');
+}
 function showHours(){ const h = (DATA.hours[lang] || DATA.hours.en || '').trim(); const el = document.querySelector('[data-i18n="hours_v"]'); if(el) el.textContent = h || t('hours_v'); }
 function syncFields(){ $$('[data-f]').forEach(i=>{ const [g,l] = i.dataset.f.split('.'); i.value = DATA[g][l] || ''; }); }
-function normalize(d){ return {photos:d.photos||{}, prices:d.prices||{}, soldOut:d.soldOut||[], hours:Object.assign({en:'',si:'',ta:''}, d.hours), notice:Object.assign({en:'',si:'',ta:''}, d.notice)}; }
-function applyData(){ cart = cart.filter(c=>!isSold(c.id)); saveCart(); renderFavs(); renderMenu(); renderCart(); showNotice(); showHours(); syncFields(); }
+function normalize(d){ return {contact:Object.assign({}, d.contact), address:Object.assign({en:'',si:'',ta:''}, d.address), photos:d.photos||{}, prices:d.prices||{}, soldOut:d.soldOut||[], hours:Object.assign({en:'',si:'',ta:''}, d.hours), notice:Object.assign({en:'',si:'',ta:''}, d.notice)}; }
+function applyData(){ cart = cart.filter(c=>!isSold(c.id)); saveCart(); renderFavs(); renderMenu(); renderCart(); showNotice(); showHours(); showContact(); syncFields(); }
 async function loadData(){
   /* The saved copy comes from the API. shop-data.json in the project is the starting copy until the first save. */
   for(const url of ['/api/shop-data','shop-data.json']){
